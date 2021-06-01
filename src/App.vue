@@ -1,13 +1,29 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/test">Test</router-link>
+
+    <div id="content">
+      <div id="router-link">
+        <router-link to="/"></router-link>
+        <router-link to="/storehouse"></router-link>
+        <router-link to="/user"></router-link>
+        <router-link to="/test"></router-link>
+      </div>
+      <router-view/>
     </div>
-    <router-view />
+    <bottom-bar></bottom-bar>
   </div>
 </template>
+
+<script>
+import BottomBar from "./components/BottomBar";
+
+export default {
+  name: "App",
+  components: {
+    BottomBar
+  }
+}
+</script>
 
 <style>
 #app {
@@ -18,16 +34,20 @@
   color: #2c3e50;
 }
 
-#nav {
-  padding: 30px;
+#content {
+  margin-bottom: 50px;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+/*#nav {*/
+/*  padding: 30px;*/
+/*}*/
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+/*#nav a {*/
+/*  font-weight: bold;*/
+/*  color: #2c3e50;*/
+/*}*/
+
+/*#nav a.router-link-exact-active {*/
+/*  color: #42b983;*/
+/*}*/
 </style>
