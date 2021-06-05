@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-
     <div id="content">
       <div id="router-link">
         <router-link to="/"></router-link>
@@ -8,7 +7,7 @@
         <router-link to="/user"></router-link>
         <router-link to="/test"></router-link>
       </div>
-      <router-view/>
+      <router-view />
     </div>
     <bottom-bar></bottom-bar>
   </div>
@@ -20,14 +19,14 @@ import BottomBar from "./components/BottomBar";
 export default {
   name: "App",
   components: {
-    BottomBar
-  }
-}
+    BottomBar,
+  },
+};
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Microsoft YaHei, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -37,17 +36,4 @@ export default {
 #content {
   margin-bottom: 50px;
 }
-
-/*#nav {*/
-/*  padding: 30px;*/
-/*}*/
-
-/*#nav a {*/
-/*  font-weight: bold;*/
-/*  color: #2c3e50;*/
-/*}*/
-
-/*#nav a.router-link-exact-active {*/
-/*  color: #42b983;*/
-/*}*/
 </style>

@@ -1,12 +1,62 @@
 <template>
-  <div>
-    Home Router
+  <div class="home">
+    <van-search
+        v-model="searchContent"
+        shape="round"
+        placeholder="请输入搜索关键词"
+        @search="onSearch"
+        clearable
+    />
+    <div class="home-content">
+      <h3>养生推荐</h3>
+      <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
+        <!-- TODO 养生推荐的组件 v-for -->
+        <van-swipe-item>1</van-swipe-item>
+        <van-swipe-item>2</van-swipe-item>
+        <van-swipe-item>3</van-swipe-item>
+        <van-swipe-item>4</van-swipe-item>
+      </van-swipe>
+      <h3>热文推荐</h3>
+      <!-- TODO 养生推荐的组件 v-for -->
+    </div>
   </div>
 </template>
 
 <script>
+import Vue from "vue";
 
 export default {
   name: "Home",
+  data() {
+    return {
+      searchContent: "",
+    };
+  },
+  methods: {
+    onSearch: function () {
+      console.log("首页导航栏搜索");
+      // axios test
+      Vue.axios
+          .post("http://localhost:7001/search/img", {
+            tcm_id: 1
+          })
+          .then((response) => console.log(response))
+          .catch((error) => console.log(error));
+    },
+  },
 };
 </script>
+
+<style scoped>
+.home-content {
+  padding: 0 10px;
+}
+
+.my-swipe .van-swipe-item {
+  color: #fff;
+  font-size: 20px;
+  line-height: 150px;
+  text-align: center;
+  background-color: #39a9ed;
+}
+</style>

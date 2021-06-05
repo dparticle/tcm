@@ -1,15 +1,11 @@
 <template>
-  <div>
-    StoreHouse Router
-  </div>
+  <div>StoreHouse Router</div>
 </template>
 
 <script>
 export default {
-  name: "StoreHouse"
-}
+  name: "StoreHouse",
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

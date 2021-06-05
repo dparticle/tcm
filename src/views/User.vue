@@ -1,15 +1,11 @@
 <template>
-  <div>
-    User Router
-  </div>
+  <div>User Router</div>
 </template>
 
 <script>
 export default {
-  name: "User"
-}
+  name: "User",
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
