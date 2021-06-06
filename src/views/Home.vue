@@ -1,13 +1,15 @@
 <template>
   <div class="home">
-    <van-search
-        v-model="searchContent"
-        shape="round"
-        placeholder="请输入搜索关键词"
-        @search="onSearch"
-        clearable
-    />
-    <div class="home-content">
+    <div class="header">
+      <van-search
+          v-model="searchContent"
+          shape="round"
+          placeholder="请输入搜索关键词"
+          @search="onSearch"
+          clearable
+      />
+    </div>
+    <div class="content">
       <h3>养生推荐</h3>
       <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
         <!-- TODO 养生推荐的组件 v-for -->
@@ -40,7 +42,11 @@ export default {
           .post("http://localhost:7001/search/img", {
             tcm_id: 1
           })
-          .then((response) => console.log(response))
+          .then((response) => {
+            response.data.forEach((v) => {
+              console.log(v.tcm_id, v.img_url);
+            })
+          })
           .catch((error) => console.log(error));
     },
   },
@@ -48,7 +54,7 @@ export default {
 </script>
 
 <style scoped>
-.home-content {
+.content {
   padding: 0 10px;
 }
 
