@@ -2,11 +2,11 @@
   <div class="home">
     <div class="header">
       <van-search
-          v-model="searchContent"
-          shape="round"
-          placeholder="请输入搜索关键词"
-          @search="onSearch"
-          clearable
+        v-model="searchContent"
+        shape="round"
+        placeholder="请输入搜索关键词"
+        @search="onSearch"
+        clearable
       />
     </div>
     <div class="content">
@@ -25,8 +25,6 @@
 </template>
 
 <script>
-import Vue from "vue";
-
 export default {
   name: "Home",
   data() {
@@ -38,16 +36,16 @@ export default {
     onSearch: function () {
       console.log("首页导航栏搜索");
       // axios test
-      Vue.axios
-          .post("http://localhost:7001/search/img", {
-            tcm_id: 1
-          })
-          .then((response) => {
-            response.data.forEach((v) => {
-              console.log(v.tcm_id, v.img_url);
-            })
-          })
-          .catch((error) => console.log(error));
+      this.axios
+        .post("http://localhost:7001/search/img", {
+          tcm_id: 1,
+        })
+        .then((response) => {
+          response.data.forEach((v) => {
+            console.log(v.tcm_id, v.img_url);
+          });
+        })
+        .catch((error) => console.log(error));
     },
   },
 };

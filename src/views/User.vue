@@ -1,7 +1,9 @@
 <template>
   <div class="user">
-<!--    User Router-->
-    <van-button round type="primary" to="/user/login">跳转至登录界面</van-button>
+    <!--    User Router-->
+    <van-button round type="primary" to="/user/login"
+      >跳转至登录界面</van-button
+    >
   </div>
 </template>
 

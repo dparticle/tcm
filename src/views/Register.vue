@@ -1,6 +1,6 @@
 <template>
   <div class="register">
-    <BackNav :title="navTitleName"/>
+    <BackNav :title="navTitleName" />
   </div>
 </template>
 
@@ -17,9 +17,7 @@ export default {
   components: {
     BackNav,
   },
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

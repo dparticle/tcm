@@ -1,20 +1,20 @@
 <template>
   <div class="login">
-    <back-nav :title="navTitleName"/>
+    <back-nav :title="navTitleName" />
     <div class="header">
       <van-row type="flex" justify="center" style="">
         <van-col>
           <van-image class="logo" width="100" height="100" :src="logoUrl">
             <template v-slot:error>加载失败</template>
             <template v-slot:loading>
-              <van-loading type="spinner" size="20"/>
+              <van-loading type="spinner" size="20" />
             </template>
           </van-image>
         </van-col>
       </van-row>
     </div>
     <div class="content">
-      <login-form/>
+      <login-form />
     </div>
   </div>
 </template>
@@ -33,9 +33,9 @@ export default {
   },
   components: {
     BackNav,
-    LoginForm
+    LoginForm,
   },
-}
+};
 </script>
 
 <style scoped>
@@ -46,5 +46,4 @@ export default {
 .content {
   margin-top: 50px;
 }
-
 </style>

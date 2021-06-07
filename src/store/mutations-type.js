@@ -1,0 +1,1 @@
+export const EDIT_ROUTER_PATH = "EDIT_ROUTER_PATH";

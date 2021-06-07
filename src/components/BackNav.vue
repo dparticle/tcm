@@ -1,19 +1,15 @@
 <template>
-  <van-nav-bar
-      :title="title"
-      @click-left="onClickLeft"
-  >
+  <van-nav-bar :title="title" @click-left="onClickLeft">
     <template #left>
-      <font-awesome-icon :icon="['fas', 'chevron-left']"/>
+      <font-awesome-icon :icon="['fas', 'chevron-left']" />
     </template>
   </van-nav-bar>
 </template>
 
 <script>
-import router from "../router";
-import {library} from '@fortawesome/fontawesome-svg-core';
-import {faChevronLeft} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 library.add(faChevronLeft);
 
@@ -22,22 +18,20 @@ export default {
   methods: {
     onClickLeft: function () {
       console.log("返回");
-      router.back();
+      this.$router.back();
     },
   },
   components: {
-    FontAwesomeIcon
+    FontAwesomeIcon,
   },
   props: {
     title: {
       type: String,
       required: true,
-      default: ""
-    }
-  }
-}
+      default: "",
+    },
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
