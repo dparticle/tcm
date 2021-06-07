@@ -36,8 +36,8 @@ export default {
     onSearch: function () {
       console.log("首页导航栏搜索");
       // axios test
-      this.axios
-        .post("http://localhost:7001/search/img", {
+      this.$api.user
+        .getImgUrls({
           tcm_id: 1,
         })
         .then((response) => {

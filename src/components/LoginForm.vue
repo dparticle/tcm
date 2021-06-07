@@ -36,8 +36,8 @@
       </van-field>
       <div style="margin: 16px; padding-top: 10px">
         <van-button round block type="info" native-type="submit"
-          >登录</van-button
-        >
+          >登录
+        </van-button>
       </div>
       <div style="margin: 16px">
         <van-button round block type="default" @click="reg">注册</van-button>
