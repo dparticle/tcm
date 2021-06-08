@@ -1,12 +1,6 @@
 <template>
   <div id="app">
     <div id="content">
-      <div id="router-link">
-        <router-link to="/"></router-link>
-        <router-link to="/storehouse"></router-link>
-        <router-link to="/user"></router-link>
-        <router-link to="/test"></router-link>
-      </div>
       <router-view />
     </div>
     <bottom-bar></bottom-bar>

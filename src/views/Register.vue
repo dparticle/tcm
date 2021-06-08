@@ -1,11 +1,13 @@
 <template>
   <div class="register">
     <BackNav :title="navTitleName" />
+    <RegisterForm />
   </div>
 </template>
 
 <script>
 import BackNav from "../components/BackNav";
+import RegisterForm from "../components/RegisterForm";
 
 export default {
   name: "Register",
@@ -16,6 +18,7 @@ export default {
   },
   components: {
     BackNav,
+    RegisterForm,
   },
 };
 </script>

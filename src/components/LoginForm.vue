@@ -2,9 +2,9 @@
   <div>
     <van-form @submit="onLogin">
       <van-field
-        v-model="username"
-        name="username"
-        label="用户名"
+        v-model="user.phone"
+        name="phone"
+        label="手机号"
         placeholder="手机号"
         type="tel"
         :rules="[
@@ -21,7 +21,7 @@
         clearable
       />
       <van-field
-        v-model="password"
+        v-model="user.password"
         :type="pwdSeen ? null : 'password'"
         name="password"
         label="密码"
@@ -30,8 +30,7 @@
         @click-right-icon="onChangePwdSeen"
       >
         <template #right-icon style="color: #b2b5b9">
-          <font-awesome-icon v-if="pwdSeen" :icon="['fas', 'eye']" />
-          <font-awesome-icon v-else :icon="['fas', 'eye-slash']" />
+          <password-seen-icon :value="pwdSeen" />
         </template>
       </van-field>
       <div style="margin: 16px; padding-top: 10px">
@@ -47,48 +46,51 @@
 </template>
 
 <script>
-import { library } from "@fortawesome/fontawesome-svg-core";
-import {
-  faChevronLeft,
-  faEye,
-  faEyeSlash,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-
-library.add([faChevronLeft, faEye, faEyeSlash]);
+import PasswordSeenIcon from "./PasswordSeenIcon";
+import md5 from "md5";
+import { mapActions } from "vuex";
 
 export default {
   name: "LoginForm",
   data() {
     return {
-      username: "",
-      password: "",
+      user: {
+        phone: "",
+        password: "",
+      },
       pwdSeen: false,
     };
   },
   methods: {
     onLogin: function (values) {
-      console.log("发送登录请求");
-      console.log(values);
+      values.password = md5(values.password);
+      const payload = {
+        values: values,
+        $api: this.$api,
+        $router: this.$router,
+      };
+      this.login(payload);
     },
     onChangePwdSeen: function () {
       this.pwdSeen = !this.pwdSeen;
-      if (this.pwdSeen) {
-        console.log("显示密码");
-      } else {
-        console.log("隐藏密码");
-      }
     },
     reg: function () {
       console.log("登录路由 => 注册路由");
-      console.log(this.$store.getters.registerRouterInfo);
-      this.$store.commit("EDIT_ROUTER_PATH", { path: "/user/register" });
-      console.log(this.$store.state.registerRouterPath);
+      // console.log(this.$store.getters.registerRouterInfo);
+      this.$store.commit("SET_ROUTER_PATH", { path: "/user/register" });
+      // console.log(this.$store.state.registerRouterPath);
       this.$router.push(this.$store.state.registerRouterPath);
     },
+    ...mapActions({
+      login: "login",
+    }),
+  },
+  mounted() {
+    // 自动填充 phone，可以实现
+    this.user.phone = this.$store.state.phone;
   },
   components: {
-    FontAwesomeIcon,
+    PasswordSeenIcon,
   },
 };
 </script>

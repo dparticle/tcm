@@ -1,7 +1,12 @@
-import { EDIT_ROUTER_PATH } from "./mutations-type";
+import * as mutationsType from "./mutations-type";
+
 export default {
-  [EDIT_ROUTER_PATH](state, payload) {
-    console.log("EDIT_ROUTER_PATH handle, payload: " + payload);
+  [mutationsType.SET_ROUTER_PATH](state, payload) {
+    console.log("SET_ROUTER_PATH handle, payload: " + payload);
     state.registerRouterPath = payload.path;
+  },
+  [mutationsType.SET_USER_PHONE](state, payload) {
+    console.log("SET_USER_PHONE handle, payload: " + payload);
+    state.phone = payload.phone;
   },
 };

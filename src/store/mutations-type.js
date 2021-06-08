@@ -1,1 +1,2 @@
-export const EDIT_ROUTER_PATH = "EDIT_ROUTER_PATH";
+export const SET_ROUTER_PATH = "SET_ROUTER_PATH";
+export const SET_USER_PHONE = "SET_USER_PHONE";
