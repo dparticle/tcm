@@ -10,9 +10,13 @@ export default {
         Toast.fail(response.data.error);
       } else {
         Toast.success("登录成功");
+        // 设置全局状态
         context.commit(mutationsType.SET_TOKEN, {
           token: response.data,
         });
+        // context.commit(mutationsType.SET_USER_PHONE, {
+        //   phone: payload.values.phone,
+        // });
         setTimeout(() => {
           payload.$router.back();
         }, 500);
@@ -48,11 +52,16 @@ export default {
         }, 1000);
 
         // 登录路由自动填写手机号
-        context.commit(mutationsType.SET_USER_PHONE, {
-          phone: payload.values.phone,
-        });
+        // context.commit(mutationsType.SET_USER_PHONE, {
+        //   phone: payload.values.phone,
+        // });
         setTimeout(() => {
-          payload.$router.replace("/user/login");
+          payload.$router.replace({
+            path: "/user/login",
+            query: {
+              phone: payload.values.phone,
+            },
+          });
         }, 3000);
       }
     });

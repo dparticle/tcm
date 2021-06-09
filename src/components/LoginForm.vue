@@ -91,7 +91,8 @@ export default {
   },
   mounted() {
     // 自动填充 phone，可以实现
-    this.user.phone = this.$store.state.phone;
+    // this.user.phone = this.$store.state.phone;
+    this.user.phone = this.$route.query.phone;
   },
   components: {
     PasswordSeenIcon,
