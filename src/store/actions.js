@@ -14,7 +14,7 @@ export default {
           token: response.data,
         });
         setTimeout(() => {
-          payload.$router.push("/user");
+          payload.$router.back();
         }, 500);
       }
     });
@@ -52,7 +52,7 @@ export default {
           phone: payload.values.phone,
         });
         setTimeout(() => {
-          payload.$router.push("/user/login");
+          payload.$router.replace("/user/login");
         }, 3000);
       }
     });
