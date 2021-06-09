@@ -5,7 +5,7 @@ export default {
   //TODO 分 user 模块
   login(context, payload) {
     payload.$api.user.login(payload.values).then((response) => {
-      console.log(response.data);
+      console.log("登录请求后端返回：" + response.data);
       if (response.data.error !== undefined) {
         Toast.fail(response.data.error);
       } else {
@@ -20,10 +20,10 @@ export default {
     });
   },
   reg(context, payload) {
-    console.log(payload.values);
+    // console.log(payload.values);
     // 没实现异步
     payload.$api.user.reg(payload.values).then((response) => {
-      // console.log(response);
+      console.log("注册请求后端返回：" + response.data);
       // 错误处理，判断是否存在某属性 in（支持继承）、hasOwnProperty（无继承）、undefined
       console.log(response.data.error);
       if (response.data.error !== undefined) {

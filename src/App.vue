@@ -3,7 +3,7 @@
     <div id="content">
       <router-view />
     </div>
-    <bottom-bar></bottom-bar>
+    <bottom-bar v-show="$route.meta.bottomBarShow !== undefined"></bottom-bar>
   </div>
 </template>
 

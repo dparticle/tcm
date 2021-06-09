@@ -17,7 +17,7 @@ export default {
   name: "User",
   computed: {
     signStatus: function () {
-      console.log(this.$store.state.token);
+      // console.log(this.$store.state.token);
       return stringCheck(this.$store.state.token);
     },
   },
