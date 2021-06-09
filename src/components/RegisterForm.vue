@@ -1,3 +1,4 @@
+<!-- 注册表单组件 -->
 <template>
   <div>
     <van-form @submit="onRegister">
@@ -106,6 +107,7 @@ export default {
         rePwd: [
           { required: true, message: "请再次填写密码" },
           {
+            // 两次密码输入是否一致的验证器
             validator: () => {
               return this.user.rePassword === this.user.password;
             },
@@ -119,12 +121,14 @@ export default {
     onRegister: function (values) {
       for (let key of Object.keys(values)) {
         //TODO uploader 待处理
+        // 空字符串处理成没有赋值，使传到后端时数据自动被过滤
         if (!stringCheck(values[key])) {
           values[key] = undefined;
         }
         if (key === "password") {
           values[key] = md5(values[key]);
         }
+        // 删除重复密码的属性
         delete values.rePassword;
       }
       // console.log(values);

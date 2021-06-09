@@ -1,3 +1,4 @@
+<!-- 登录表单组件 -->
 <template>
   <div>
     <van-form @submit="onLogin">
@@ -13,6 +14,7 @@
             message: '请填写手机号',
           },
           {
+            // 手机号正则表达式匹配
             pattern:
               /^1(3\d|4[5-9]|5[0-35-9]|6[2567]|7[0-8]|8\d|9[0-35-9])\d{8}$/,
             message: '手机号格式错误',
@@ -30,6 +32,7 @@
         @click-right-icon="onChangePwdSeen"
       >
         <template #right-icon style="color: #b2b5b9">
+          <!-- 显示隐藏密码 -->
           <password-seen-icon :value="pwdSeen" />
         </template>
       </van-field>
@@ -81,6 +84,7 @@ export default {
       // console.log(this.$store.state.registerRouterPath);
       this.$router.push(this.$store.state.registerRouterPath);
     },
+    // 调用 vuex 中的 login 的 action
     ...mapActions({
       login: "login",
     }),

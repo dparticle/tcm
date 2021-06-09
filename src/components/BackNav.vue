@@ -1,3 +1,4 @@
+<!-- 带返回上一个路由的导航栏，自定义 title -->
 <template>
   <van-nav-bar :title="title" @click-left="onClickLeft">
     <template #left>

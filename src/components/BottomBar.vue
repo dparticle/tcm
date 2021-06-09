@@ -1,3 +1,4 @@
+<!-- 底部导航栏，自定义 item，但是图标原因只能写死了 -->
 <template>
   <van-tabbar v-model="active">
     <!--TODO v-for-->

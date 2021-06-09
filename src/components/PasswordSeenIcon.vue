@@ -1,3 +1,4 @@
+<!-- 显示/隐藏密码的图标组件 -->
 <template>
   <div>
     <font-awesome-icon v-if="value" :icon="['fas', 'eye']" />
