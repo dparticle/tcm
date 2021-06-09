@@ -1,5 +1,6 @@
 <template>
   <van-tabbar v-model="active">
+    <!--TODO v-for-->
     <van-tabbar-item replace to="/" name="home">
       <span>首页</span>
       <!-- 插槽 -->

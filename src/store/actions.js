@@ -8,7 +8,7 @@ export default {
       if (response.data.state) {
         Toast.success(response.data.message);
         setTimeout(() => {
-          payload.$router.back();
+          payload.$router.push("/user");
         }, 500);
       } else {
         Toast.fail(response.data.message);
@@ -16,11 +16,13 @@ export default {
     });
   },
   reg(context, payload) {
+    console.log(payload.values);
     // 没实现异步
     payload.$api.user.reg(payload.values).then((response) => {
       // console.log(response);
-      // 错误处理
-      if (response.data.error !== null) {
+      // 错误处理，判断是否存在某属性 in（支持继承）、hasOwnProperty（无继承）、undefined
+      console.log(response.data.error);
+      if (response.data.error !== undefined) {
         Toast.fail(response.data.error);
       } else {
         const toast = Toast.loading({
@@ -43,7 +45,7 @@ export default {
 
         // 登录路由自动填写手机号
         context.commit(mutationsType.SET_USER_PHONE, {
-          phone: this.user.phone,
+          phone: payload.values.phone,
         });
         setTimeout(() => {
           payload.$router.push("/user/login");

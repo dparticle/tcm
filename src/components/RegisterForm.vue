@@ -52,7 +52,7 @@
       </van-field>
       <van-field
         v-model="user.password"
-        :type="pwdSeen ? null : 'password'"
+        :type="pwdSeen ? undefined : 'password'"
         name="password"
         required
         label="密码"
@@ -66,8 +66,8 @@
       </van-field>
       <van-field
         v-model="user.rePassword"
-        :type="pwdSeen ? null : 'password'"
-        name="re-password"
+        :type="pwdSeen ? undefined : 'password'"
+        name="rePassword"
         required
         label="确认密码"
         placeholder="请再次输入密码"
@@ -120,11 +120,12 @@ export default {
       for (let key of Object.keys(values)) {
         //TODO uploader 待处理
         if (!stringCheck(values[key])) {
-          values[key] = null;
+          values[key] = undefined;
         }
         if (key === "password") {
           values[key] = md5(values[key]);
         }
+        delete values.rePassword;
       }
       // console.log(values);
       const payload = {
@@ -143,8 +144,8 @@ export default {
       setTimeout(() => {
         file.url =
           "https://gitee.com/dparticle/image_host_picgo/raw/master/img/20210608001819.jpg";
-        file.status = null;
-        file.message = null;
+        file.status = undefined;
+        file.message = undefined;
         console.log(this.uploader);
       }, 2000);
     },

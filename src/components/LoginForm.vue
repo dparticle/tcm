@@ -22,7 +22,7 @@
       />
       <van-field
         v-model="user.password"
-        :type="pwdSeen ? null : 'password'"
+        :type="pwdSeen ? undefined : 'password'"
         name="password"
         label="密码"
         placeholder="密码"
