@@ -5,13 +5,17 @@ export default {
   //TODO 分 user 模块
   login(context, payload) {
     payload.$api.user.login(payload.values).then((response) => {
-      if (response.data.state) {
-        Toast.success(response.data.message);
+      console.log(response.data);
+      if (response.data.error !== undefined) {
+        Toast.fail(response.data.error);
+      } else {
+        Toast.success("登录成功");
+        context.commit(mutationsType.SET_TOKEN, {
+          token: response.data,
+        });
         setTimeout(() => {
           payload.$router.push("/user");
         }, 500);
-      } else {
-        Toast.fail(response.data.message);
       }
     });
   },

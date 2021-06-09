@@ -41,9 +41,10 @@ export default {
           tcm_id: 1,
         })
         .then((response) => {
-          response.data.forEach((v) => {
-            console.log(v.tcm_id, v.img_url);
-          });
+          console.log(response);
+          // response.data.forEach((v) => {
+          //   console.log(v.tcm_id, v.img_url);
+          // });
         })
         .catch((error) => console.log(error));
     },

@@ -9,4 +9,9 @@ export default {
     console.log("SET_USER_PHONE handle, payload: " + payload);
     state.phone = payload.phone;
   },
+  // 操作 token state 集
+  [mutationsType.SET_TOKEN](state, payload) {
+    console.log("SET_TOKEN handle, payload: " + payload);
+    state.token = payload.token;
+  },
 };
