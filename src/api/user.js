@@ -9,6 +9,9 @@ const user = {
   reg(params) {
     return axios.post(`${base.local}/user/reg`, params);
   },
+  me() {
+    return axios.get(`${base.local}/user/me`);
+  },
 };
 
 export default user;

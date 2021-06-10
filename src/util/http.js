@@ -22,7 +22,8 @@ const errorHandle = (res) => {
     // 401: 未登录状态，跳转登录路由，egg.js token 验证失败返回也是
     case 401:
       localStorage.removeItem("token");
-      store.commit("SET_TOKEN", { token: "" });
+      store.commit("SET_TOKEN", { token: undefined });
+      store.commit("SET_USER", { user: undefined });
       toLoginRouter();
       break;
     case 404:

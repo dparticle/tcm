@@ -4,8 +4,9 @@ import { Toast } from "vant";
 export default {
   //TODO 分 user 模块
   login(context, payload) {
+    console.log("vuex acions: 登录");
     payload.$api.user.login(payload.values).then((response) => {
-      console.log("登录请求后端返回：" + response.data);
+      // console.log("登录请求后端返回：" + response.data);
       if (response.data.error !== undefined) {
         Toast.fail(response.data.error);
       } else {
@@ -14,6 +15,8 @@ export default {
         context.commit(mutationsType.SET_TOKEN, {
           token: response.data,
         });
+        // 设置全局用户配置
+        context.dispatch("me", payload.$api);
         // context.commit(mutationsType.SET_USER_PHONE, {
         //   phone: payload.values.phone,
         // });
@@ -24,6 +27,7 @@ export default {
     });
   },
   reg(context, payload) {
+    console.log("vuex acions: 注册");
     // console.log(payload.values);
     // 没实现异步
     payload.$api.user.reg(payload.values).then((response) => {
@@ -64,6 +68,14 @@ export default {
           });
         }, 3000);
       }
+    });
+  },
+  // 获取用户信息
+  me(context, api) {
+    console.log("vuex acions: 获取用户信息");
+    api.user.me().then((response) => {
+      console.log("GET /user/me: " + response.statusText);
+      context.commit(mutationsType.SET_USER, { user: response.data });
     });
   },
 };

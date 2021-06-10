@@ -15,6 +15,12 @@ export default {
   components: {
     BottomBar,
   },
+  mounted() {
+    console.log("App: mounted");
+    if (this.$store.state.token) {
+      this.$store.dispatch("me", this.$api);
+    }
+  },
 };
 </script>
 

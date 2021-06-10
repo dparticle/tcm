@@ -35,7 +35,7 @@ export default {
   methods: {
     onSearch: function () {
       console.log("首页导航栏搜索");
-      // axios test
+      //TODO axios test
       this.$api.tcm
         .getImgUrls({
           tcm_id: 1,
