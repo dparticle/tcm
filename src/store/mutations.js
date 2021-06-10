@@ -16,4 +16,9 @@ export default {
     console.log("SET_USER handle, payload: " + payload.user);
     state.user = payload.user;
   },
+  // 暗黑模式开启关闭
+  [mutationsType.REVERSE_DARKMODE](state) {
+    console.log("REVERSE_DARKMODE handle");
+    state.darkMode = !state.darkMode;
+  },
 };

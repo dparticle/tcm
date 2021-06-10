@@ -16,7 +16,11 @@ export default {
     BottomBar,
   },
   mounted() {
-    console.log("App: mounted");
+    /**
+     * TODO token 过期只做在没有活跃的时候，如果用户在活跃，过期前一段时间（全局定时器）自动更新 token，
+     * token 可以在前端解析过期时间，base64
+     */
+    console.log("App Router: mounted");
     if (this.$store.state.token) {
       this.$store.dispatch("me", this.$api);
     }
@@ -25,6 +29,10 @@ export default {
 </script>
 
 <style>
+body {
+  background-color: #f7f8fa;
+}
+
 #app {
   font-family: Microsoft YaHei, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

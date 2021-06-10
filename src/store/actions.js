@@ -11,6 +11,12 @@ export default {
         Toast.fail(response.data.error);
       } else {
         Toast.success("登录成功");
+        // token 解析
+        console.log(
+          JSON.parse(
+            Buffer.from(response.data.split(".")[1], "base64").toString()
+          )
+        );
         // 设置全局状态
         context.commit(mutationsType.SET_TOKEN, {
           token: response.data,
