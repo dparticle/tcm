@@ -2,7 +2,7 @@
   <div class="login">
     <back-nav :title="navTitleName" />
     <div class="header">
-      <van-row type="flex" justify="center" style="">
+      <van-row type="flex" justify="center">
         <van-col>
           <van-image class="logo" width="100" height="100" :src="logoUrl">
             <template v-slot:error>加载失败</template>
