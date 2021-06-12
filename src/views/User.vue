@@ -57,17 +57,15 @@ export default {
             {
               title: "联系客服",
               icon: "service-o",
-              linkRouter: undefined,
             },
             {
               title: "意见反馈",
               icon: "comment-o",
-              linkRouter: undefined,
             },
             {
               title: "设置",
               icon: "setting-o",
-              linkRouter: undefined,
+              to: "/setting",
             },
           ],
         },

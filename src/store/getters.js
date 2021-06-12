@@ -1,4 +1,5 @@
 export default {
+  // 不需要加执行标识符 ()
   registerRouterInfo(state) {
     return "注册路由路径：" + state.registerRouterPath;
   },

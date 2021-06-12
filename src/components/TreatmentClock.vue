@@ -107,8 +107,8 @@ export default {
       const [start, end] = date;
       this.calendarShow = false;
       console.log("选择时间区间");
-      console.log("start: " + start);
-      console.log("end: " + end);
+      console.log("start => " + start);
+      console.log("end => " + end);
       // 计算天数
       this.totalDays =
         (end.getTime() - start.getTime()) / (1000 * 3600 * 24) + 1;

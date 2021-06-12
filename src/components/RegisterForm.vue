@@ -167,28 +167,28 @@ export default {
 
   // 生命周期测试
   beforeCreate() {
-    console.log("Register Router: beforeCreate");
+    console.log("Register Router => beforeCreate");
   },
   created() {
-    console.log("Register Router: created");
+    console.log("Register Router => created");
   },
   beforeMount() {
-    console.log("Register Router: beforeMount");
+    console.log("Register Router => beforeMount");
   },
   mounted() {
-    console.log("Register Router: mounted");
+    console.log("Register Router => mounted");
   },
   beforeUpdate() {
-    console.log("Register Router: beforeUpdate");
+    console.log("Register Router => beforeUpdate");
   },
   updated() {
-    console.log("Register Router: updated");
+    console.log("Register Router => updated");
   },
   beforeDestroy() {
-    console.log("Register Router: beforeDestroy");
+    console.log("Register Router => beforeDestroy");
   },
   destroyed() {
-    console.log("Register Router: destroyed");
+    console.log("Register Router => destroyed");
   },
   components: {
     PasswordSeenIcon,

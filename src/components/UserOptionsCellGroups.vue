@@ -7,8 +7,9 @@
         :title="cell.title"
         :icon="cell.icon"
         is-link
-        :to="cell.linkRouter"
+        :to="cell.to"
       />
+      <!-- 定制其中一个用 v-if，不可行 -->
     </van-cell-group>
   </div>
 </template>

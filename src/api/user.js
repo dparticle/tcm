@@ -12,6 +12,9 @@ const user = {
   me() {
     return axios.get(`${base.local}/user/me`);
   },
+  refreshToken(params) {
+    return axios.post(`${base.local}/user/refreshToken`, params);
+  },
 };
 
 export default user;

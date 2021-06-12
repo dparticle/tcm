@@ -56,6 +56,11 @@ const routes = [
     name: "UserInfo",
     component: () => import("../views/UserInfo.vue"),
   },
+  {
+    path: "/setting",
+    name: "Setting",
+    component: () => import("../views/Setting.vue"),
+  },
 ];
 
 const router = new VueRouter({
