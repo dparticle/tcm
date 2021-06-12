@@ -3,7 +3,12 @@
     <BackNav title="个人信息" />
     <!--TODO 固定的 cell 是不是没必要用 js，我个人觉得写死更好 -->
     <van-cell-group>
-      <van-cell center title="头像" is-link>
+      <van-cell
+        center
+        title="头像"
+        is-link
+        @click="avatarActionSheet.show = true"
+      >
         <template #default>
           <van-image
             width="25"
@@ -13,19 +18,39 @@
           />
         </template>
       </van-cell>
+      <!--TODO 用户头像更新、保存 -->
+      <van-action-sheet
+        v-model="avatarActionSheet.show"
+        :actions="avatarActionSheet.actions"
+        @select="onSelect"
+        cancel-text="取消"
+        close-on-click-action
+        @cancel="avatarActionSheet.show = false"
+      />
       <!--TODO 更改用户名 -->
       <van-cell
         center
         title="用户名"
         is-link
         :value="$store.state.user.username"
+        @click="dialogs.username.show = true"
       />
-      <van-cell
-        center
-        title="手机号"
-        is-link
-        :value="$store.state.user.phone"
-      />
+      <van-dialog
+        v-model="dialogs.username.show"
+        title="修改用户名"
+        showCancelButton
+        @confirm="usernameDialogConfirm"
+        @cancel="dialogs.username.show = false"
+      >
+        <van-field
+          v-model="dialogs.username.value"
+          name="newUsername"
+          clearable
+          placeholder="请输入新用户名"
+          style="margin-bottom: 16px"
+        />
+      </van-dialog>
+      <van-cell center title="手机号" :value="$store.state.user.phone" />
       <van-cell center title="二维码名片" is-link>
         <template #default>
           <van-icon name="qr" size="16" />
@@ -51,12 +76,47 @@ import BackNav from "../components/BackNav";
 
 export default {
   name: "UserInfo",
+  data() {
+    return {
+      dialogs: {
+        username: {
+          show: false,
+          value: "",
+        },
+      },
+      avatarActionSheet: {
+        show: false,
+        actions: [
+          {
+            name: "拍照",
+          },
+          {
+            name: "从手机相册选择",
+          },
+          {
+            name: "保存图片",
+          },
+        ],
+      },
+    };
+  },
   //TODO 修改 username，更新后 user 需要更新
   methods: {
     logout: function () {
       localStorage.removeItem("token");
       this.$store.commit("SET_TOKEN", { token: undefined });
       this.$store.commit("SET_USER", { user: undefined });
+    },
+    usernameDialogConfirm: function () {
+      //TODO 请求后端更新用户名
+      console.log("确认修改用户名，用户名为：" + this.dialogs.username.value);
+      this.dialogs.username.show = false;
+      this.dialogs.username.value = "";
+    },
+    // 动作面板 item 选择
+    onSelect: function (item) {
+      this.avatarActionSheet.show = false;
+      console.log("选择 item 名为：" + item.name);
     },
   },
   components: {
