@@ -40,7 +40,7 @@
           />
         </van-col>
         <van-col>
-          <van-button v-if="todayStatus" icon="passed" type="primary"
+          <van-button v-if="myTodayStatus" icon="passed" type="primary"
             >已打卡
           </van-button>
           <van-button v-else icon="warning-o" type="warning" @click="clockIn"
