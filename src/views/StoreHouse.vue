@@ -154,6 +154,17 @@ export default {
     },
     onLoad: function () {
       console.log("请求前页数：" + this.page);
+      // 定时器，时间和 axios 的超时时间一致，错误处理
+      const time = setTimeout(() => {
+        console.log("10s 后 loading 值 => " + this.loading);
+        if (this.loading) {
+          console.log("list 加载失败");
+          //TODO 未知失败请求后的页数是否增加，好像是增加的，那需要回溯，但是再执行一次就会成功，一下子显示 2 perPage 也不是不可以
+          console.log("失败请求后页数 => " + this.page);
+          this.error = true;
+          this.loading = false;
+        }
+      }, 10000);
       this.$api.tcm
         .rough({
           page: this.page,
@@ -166,6 +177,9 @@ export default {
           }
           // 加载状态结束
           this.loading = false;
+          // 关闭定时器
+          console.log("list 加载成功，关闭 error 计时器");
+          clearTimeout(time);
           this.page++;
           console.log("请求后页数 => " + this.page);
 
@@ -174,17 +188,6 @@ export default {
             this.finished = true;
           }
         });
-      // 错误处理
-      setTimeout(() => {
-        console.log("10s 后 loading 值 => " + this.loading);
-        console.log("list 加载失败");
-        //TODO 未知失败请求后的页数是否增加，好像是增加的，那需要回溯，但是再执行一次就会成功，一下子显示 2 perPage 也不是不可以
-        console.log("失败请求后页数 => " + this.page);
-        if (this.loading) {
-          this.error = true;
-          this.loading = false;
-        }
-      }, 10000);
     },
   },
   components: {

@@ -2,7 +2,7 @@
   <div>
     <BackNav title="个人信息" />
     <!-- 防止未销毁路由导致的 undefined 报错 -->
-    <div v-if="$store.state.token">
+    <div v-if="$store.state.user">
       <!--TODO 固定的 cell 是不是没必要用 js，我个人觉得写死更好 -->
       <van-cell-group>
         <van-cell

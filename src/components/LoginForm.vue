@@ -41,10 +41,10 @@
           >登录
         </van-button>
       </div>
-      <div style="margin: 16px">
-        <van-button round block type="default" @click="reg">注册</van-button>
-      </div>
     </van-form>
+    <div style="margin: 16px">
+      <van-button round block type="default" @click="reg">注册</van-button>
+    </div>
   </div>
 </template>
 

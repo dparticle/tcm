@@ -16,8 +16,7 @@ export default {
         context.commit(mutationsType.SET_TOKEN, {
           token: response.data,
         });
-        // 设置全局用户配置
-        //TODO v-if 设置成 user，还是会报错
+        // 设置全局用户配置，需要考虑先获取的 token，再获取的 user
         context.dispatch("me", payload.$api);
         // context.commit(mutationsType.SET_USER_PHONE, {
         //   phone: payload.values.phone,

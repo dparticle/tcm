@@ -2,7 +2,7 @@
 <template>
   <van-cell-group :border="false" class="user-info">
     <van-cell
-      v-if="$store.state.token"
+      v-if="$store.state.user"
       center
       size="large"
       :title="$store.state.user.username"
