@@ -36,10 +36,21 @@
       </van-grid>
       <!-- 今日养生，每天都有爱自己 -->
       <home-item title="今日养生" describe="每天学会养生招">
-        <div style="height: 200px">这是内容</div>
+        <div class="daily-health">
+          <van-row gutter="20">
+            <van-col
+              v-for="(item, index) in recommendList"
+              :key="index"
+              span="12"
+            >
+              <recommend-card :info="item" />
+            </van-col>
+          </van-row>
+        </div>
       </home-item>
       <!-- 热文推荐，每天都有新发现 list -->
       <home-item title="热文推荐" describe="每天都有新发现">
+        <!--TODO 一个 cell-group -->
         <div style="height: 200px">这是内容</div>
       </home-item>
     </div>
@@ -48,6 +59,7 @@
 
 <script>
 import HomeItem from "../components/HomeItem";
+import RecommendCard from "../components/RecommendCard";
 
 export default {
   name: "Home",
@@ -97,6 +109,8 @@ export default {
           src: require("../assets/encyclopedia.png"),
         },
       ],
+      recommendList: [],
+      articleList: [],
     };
   },
   methods: {
@@ -104,8 +118,15 @@ export default {
       this.$router.push("/search");
     },
   },
+  mounted() {
+    this.$api.tcm.getCommend().then((response) => {
+      console.log("GET /tcm/recommend => " + response.statusText);
+      this.recommendList = response.data;
+    });
+  },
   components: {
     HomeItem,
+    RecommendCard,
   },
 };
 </script>
@@ -121,5 +142,10 @@ export default {
 /* 防止内容被底部栏遮挡 */
 .home {
   margin-bottom: 50px;
+}
+
+.daily-health {
+  height: 200px;
+  margin: 10px 4px;
 }
 </style>

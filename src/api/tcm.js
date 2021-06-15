@@ -9,6 +9,9 @@ const tcm = {
   getInfo(params) {
     return axios.post(`${base.local}/tcm`, params);
   },
+  getCommend() {
+    return axios.get(`${base.local}/tcm/recommend`);
+  },
 };
 
 export default tcm;
