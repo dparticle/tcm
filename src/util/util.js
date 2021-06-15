@@ -55,3 +55,12 @@ export function getExpires() {
 export function formatDate(milliseconds) {
   return moment(new Date().setTime(milliseconds)).format("YYYY-MM-DD HH:mm:ss");
 }
+
+// 数组分割
+export function sliceArray(data, length) {
+  let result = [];
+  for (let i = 0; i < data.length; i += length) {
+    result.push(data.slice(i, i + length));
+  }
+  return result;
+}

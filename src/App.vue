@@ -1,7 +1,10 @@
 <template>
   <div id="app">
-    <div id="content">
-      <router-view />
+    <div class="content">
+      <!--TODO 保存路由状态 -->
+      <keep-alive>
+        <router-view />
+      </keep-alive>
     </div>
     <bottom-bar v-show="$route.meta.bottomBarShow"></bottom-bar>
   </div>
@@ -33,11 +36,11 @@ body {
   font-family: Microsoft YaHei, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 
-#content {
+/* 防止内容被底部栏遮挡 */
+.content {
   margin-bottom: 50px;
 }
 </style>

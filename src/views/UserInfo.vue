@@ -131,8 +131,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.van-cell__title {
-  text-align: left;
-}
-</style>
+<style scoped></style>

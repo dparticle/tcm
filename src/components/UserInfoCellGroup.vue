@@ -56,7 +56,6 @@ export default {
 .van-cell__title {
   /* 和头像与左边距相同 */
   margin-left: 16px;
-  text-align: left;
   font-size: 18px;
 }
 

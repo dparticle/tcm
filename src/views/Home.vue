@@ -1,67 +1,120 @@
 <template>
   <div class="home">
+    <!-- 首页头部 -->
     <div class="header">
-      <van-search
-        v-model="searchContent"
-        shape="round"
-        placeholder="请输入搜索关键词"
-        @search="onSearch"
-        clearable
-      />
+      <van-row>
+        <van-col span="4" class="col-logo">
+          <van-image
+            width="36"
+            height="36"
+            :src="require('../assets/logo.png')"
+            style="margin: auto"
+          />
+        </van-col>
+        <van-search placeholder="请输入搜索关键词" @focus="onFocus" />
+      </van-row>
     </div>
     <div class="content">
-      <h3>养生推荐</h3>
-      <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
-        <!-- TODO 养生推荐的组件 v-for -->
-        <van-swipe-item>1</van-swipe-item>
-        <van-swipe-item>2</van-swipe-item>
-        <van-swipe-item>3</van-swipe-item>
-        <van-swipe-item>4</van-swipe-item>
+      <!-- 轮播图 -->
+      <van-swipe class="swipe" :autoplay="3000" indicator-color="white">
+        <van-swipe-item v-for="image in swipeImages" :key="image.id">
+          <van-image height="150" :src="image.src" />
+        </van-swipe-item>
       </van-swipe>
-      <h3>热文推荐</h3>
-      <!-- TODO 养生推荐的组件 v-for -->
+      <!-- 四个中药相关的宫格（仅前端） -->
+      <van-grid :border="false">
+        <van-grid-item
+          v-for="item in gridItems"
+          :key="item.id"
+          :text="item.text"
+          :to="item.to"
+        >
+          <template #icon>
+            <van-image width="28" height="28" :src="item.src" />
+          </template>
+        </van-grid-item>
+      </van-grid>
+      <!-- 今日养生，每天都有爱自己 -->
+      <home-item title="今日养生" describe="每天学会养生招">
+        <div style="height: 200px">这是内容</div>
+      </home-item>
+      <!-- 热文推荐，每天都有新发现 list -->
+      <home-item title="热文推荐" describe="每天都有新发现">
+        <div style="height: 200px">这是内容</div>
+      </home-item>
     </div>
   </div>
 </template>
 
 <script>
+import HomeItem from "../components/HomeItem";
+
 export default {
   name: "Home",
   data() {
     return {
-      searchContent: "",
+      swipeImages: [
+        {
+          id: 1,
+          src: require("../assets/swipe-1.jpg"),
+        },
+        {
+          id: 2,
+          src: require("../assets/swipe-1.jpg"),
+        },
+        {
+          id: 3,
+          src: require("../assets/swipe-1.jpg"),
+        },
+        {
+          id: 4,
+          src: require("../assets/swipe-1.jpg"),
+        },
+      ],
+      gridItems: [
+        {
+          id: 1,
+          text: "古籍",
+          to: undefined,
+          src: require("../assets/book.png"),
+        },
+        {
+          id: 2,
+          text: "穴位",
+          to: undefined,
+          src: require("../assets/acupoint.png"),
+        },
+        {
+          id: 3,
+          text: "方剂",
+          to: undefined,
+          src: require("../assets/prescription.png"),
+        },
+        {
+          id: 4,
+          text: "百科",
+          to: undefined,
+          src: require("../assets/encyclopedia.png"),
+        },
+      ],
     };
   },
   methods: {
-    onSearch: function () {
-      console.log("首页导航栏搜索");
-      //TODO axios test
-      this.$api.tcm
-        .getImgUrls({
-          tcm_id: 1,
-        })
-        .then((response) => {
-          console.log(response);
-          // response.data.forEach((v) => {
-          //   console.log(v.tcm_id, v.img_url);
-          // });
-        })
-        .catch((error) => console.log(error));
+    onFocus: function () {
+      this.$router.push("/search");
     },
+  },
+  components: {
+    HomeItem,
   },
 };
 </script>
 
 <style scoped>
-.content {
-  padding: 0 10px;
-}
-
-.my-swipe .van-swipe-item {
-  color: #fff;
-  font-size: 20px;
-  line-height: 150px;
-  text-align: center;
-  background-color: #39a9ed;
+.col-logo {
+  display: flex;
+  justify-content: center;
+  height: 54px;
+  background-color: #ffffff;
 }
 </style>

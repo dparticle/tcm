@@ -10,24 +10,26 @@
     <div v-if="$store.state.token" class="treatment-content">
       <!-- 疗程名 -->
       <van-row type="flex" justify="center">
-        <van-col>
-          <van-col
-            class="treatment-title"
-            style="font-size: 16px; margin-left: 8px"
-          >
-            {{ treatmentTitle }}
-          </van-col>
+        <van-col
+          class="treatment-title"
+          style="font-size: 16px; margin-left: 8px"
+        >
+          {{ treatmentTitle }}
         </van-col>
       </van-row>
       <!-- 疗程进度环 -->
-      <van-circle
-        v-model="currentRate"
-        :rate="rate"
-        :speed="100"
-        :color="gradientColor"
-        layer-color="#ebedf0"
-        :text="curDays + '/' + totalDays"
-      />
+      <van-row type="flex" justify="center">
+        <van-col>
+          <van-circle
+            v-model="currentRate"
+            :rate="rate"
+            :speed="100"
+            :color="gradientColor"
+            layer-color="#ebedf0"
+            :text="curDays + '/' + totalDays"
+          />
+        </van-col>
+      </van-row>
       <van-row class="button" type="flex" justify="space-around">
         <van-col>
           <van-button icon="edit" type="info" @click="calendarShow = true"

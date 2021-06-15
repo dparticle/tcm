@@ -1,20 +1,20 @@
 import axios from "axios";
-import router from "../router";
+// import router from "../router";
 import store from "../store";
 import api from "../api";
 import { Toast } from "vant";
 import { getExpires, getPhone } from "./util";
 
 // 跳转登录页
-const toLoginRouter = () => {
-  router.push({
-    path: "/user/login",
-    // 当前路由的一些参数
-    // query: {
-    //   redirect: router.currentRoute.fullPath,
-    // },
-  });
-};
+// const toLoginRouter = () => {
+//   router.push({
+//     path: "/user/login",
+//     // 当前路由的一些参数
+//     // query: {
+//     //   redirect: router.currentRoute.fullPath,
+//     // },
+//   });
+// };
 
 // 是否正在刷新的标志
 window.isRefreshing = false;
@@ -48,7 +48,8 @@ const errorHandle = (res) => {
       localStorage.removeItem("token");
       store.commit("SET_TOKEN", { token: undefined });
       store.commit("SET_USER", { user: undefined });
-      toLoginRouter();
+      // toLoginRouter();
+      Toast("请登录");
       break;
     case 404:
       Toast.fail("资源不存在");
@@ -141,6 +142,7 @@ instance.interceptors.response.use(
       return Promise.reject(response);
     } else {
       //TODO 处理断网情况
+      Toast.fail("网络错误");
     }
   }
 );

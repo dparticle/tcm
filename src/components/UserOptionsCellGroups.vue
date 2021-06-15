@@ -37,7 +37,6 @@ export default {
 }
 
 .van-cell__title {
-  text-align: left;
   margin-left: 5px;
 }
 </style>

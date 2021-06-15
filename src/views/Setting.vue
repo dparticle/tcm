@@ -50,7 +50,6 @@ export default {
 
 <style scoped>
 .van-cell__title {
-  text-align: left;
   margin-left: 5px;
 }
 </style>

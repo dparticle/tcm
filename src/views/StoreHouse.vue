@@ -1,11 +1,209 @@
 <template>
-  <div>StoreHouse Router</div>
+  <div class="store-house">
+    <van-nav-bar title="药库" @click-right="cascaderShow = true">
+      <template #right>
+        <van-icon name="filter-o" size="16" />
+        <span>筛选</span>
+      </template>
+    </van-nav-bar>
+    <!-- 粘性布局，固定在顶部 -->
+    <van-sticky>
+      <van-search
+        v-model="searchContent"
+        shape="round"
+        placeholder="按药名搜索"
+        @search="onSearch"
+        clearable
+      />
+      <!-- 显示当前所选分类标签 -->
+      <div v-if="tagValue !== ''" class="classification">
+        <span>所选分类：</span>
+        <van-tag closeable size="large" type="primary" @close="onTagClose">
+          {{ tagValue }}
+        </van-tag>
+      </div>
+    </van-sticky>
+    <van-popup v-model="cascaderShow" round position="bottom">
+      <van-cascader
+        v-model="cascaderValue"
+        title="请选择所需分类"
+        :options="options"
+        @close="cascaderShow = false"
+        @finish="onFinish"
+      />
+    </van-popup>
+    <div class="tcm-house">
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+      >
+        <van-row v-for="(tcms, index) in tcmList" :key="index" gutter="10">
+          <van-col v-for="tcm in tcms" :key="tcm.id" span="12">
+            <tcm-card
+              :id="tcm.id"
+              :name="tcm.name"
+              :name-eng="tcm.name_eng"
+              :img="tcm.img"
+            />
+          </van-col>
+        </van-row>
+      </van-list>
+    </div>
+  </div>
 </template>
 
 <script>
+import TcmCard from "../components/TcmCard";
+import { sliceArray } from "../util/util";
+
 export default {
   name: "StoreHouse",
+  data() {
+    return {
+      tcmList: [],
+      page: 0,
+      perPage: 20,
+      // list 刷新
+      loading: false,
+      finished: false,
+      searchContent: "",
+      cascaderShow: false,
+      cascaderValue: "",
+      tagValue: "",
+      //TODO 后端获取 demo 数据
+      options: [
+        // 药性
+        {
+          text: "药性",
+          value: "medicinal_group",
+          children: [
+            {
+              text: "清热解毒药",
+              value: "清热解毒药",
+            },
+            {
+              text: "利尿通淋药",
+              value: "利尿通淋药",
+            },
+            {
+              text: "祛风湿强筋骨药",
+              value: "祛风湿强筋骨药",
+            },
+          ],
+        },
+        // 性味
+        {
+          text: "性味",
+          value: "nature_flavors",
+          children: [
+            {
+              text: "甘",
+              value: "甘",
+            },
+            {
+              text: "凉",
+              value: "凉",
+            },
+            {
+              text: "平",
+              value: "平",
+            },
+          ],
+        },
+        // 科
+        {
+          text: "科",
+          value: "family",
+          children: [
+            {
+              text: "豆科",
+              value: "豆科",
+            },
+            {
+              text: "锦葵科",
+              value: "锦葵科",
+            },
+            {
+              text: "五加科",
+              value: "五加科",
+            },
+          ],
+        },
+      ],
+    };
+  },
+  //TODO 测试卡片样式
+  // mounted() {
+  //   this.$api.tcm
+  //     .round({
+  //       page: this.page,
+  //       perPage: this.perPage,
+  //     })
+  //     .then((response) => {
+  //       this.tcmList = sliceArray(response.data, 2);
+  //       console.log(this.tcmList);
+  //     });
+  // },
+  methods: {
+    onSearch: function () {
+      console.log("药库搜索 => " + this.searchContent);
+    },
+    onFinish: function ({ selectedOptions }) {
+      this.cascaderShow = false;
+      this.tagValue = selectedOptions.map((option) => option.text).join("/");
+      //TODO 后端请求分类 用 change 异步
+      //TODO 字符映射数据库字段名 json？？？
+    },
+    onTagClose: function () {
+      this.tagValue = "";
+      // 不知道怎么把级联初始化，直接赋空字符串不可行，上方的滑块位置不正确
+      // this.cascaderValue = "";
+    },
+    onLoad: function () {
+      this.$api.tcm
+        .round({
+          page: this.page,
+          perPage: this.perPage,
+        })
+        .then((response) => {
+          for (let item of sliceArray(response.data, 2)) {
+            this.tcmList.push(item);
+          }
+          // 加载状态结束
+          this.loading = false;
+          this.page++;
+
+          // 数据全部加载完成
+          if (response.data < this.perPage) {
+            this.finished = true;
+          }
+        });
+    },
+  },
+  components: {
+    TcmCard,
+  },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.van-icon-filter-o::before {
+  color: #646566;
+}
+
+.van-nav-bar__right > span {
+  color: #646566;
+}
+
+.classification {
+  background-color: #ffffff;
+  padding: 6px 16px;
+}
+
+.tcm-house {
+  padding: 0 8px;
+  margin-top: 6px;
+}
+</style>
