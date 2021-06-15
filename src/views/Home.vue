@@ -117,4 +117,9 @@ export default {
   height: 54px;
   background-color: #ffffff;
 }
+
+/* 防止内容被底部栏遮挡 */
+.home {
+  margin-bottom: 50px;
+}
 </style>

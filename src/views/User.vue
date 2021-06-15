@@ -81,4 +81,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+/* 防止内容被底部栏遮挡 */
+.user {
+  margin-bottom: 50px;
+}
+</style>

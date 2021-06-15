@@ -1,10 +1,10 @@
-<!-- 首页专题组件 -->
+<!-- 首页专题/详情页信息组件 -->
 <template>
   <div class="home-item">
     <div class="header">
       <span class="border"></span>
       <span class="title">{{ title }}</span>
-      <span class="describe">{{ describe }}</span>
+      <span v-if="describe" class="describe">{{ describe }}</span>
       <span v-if="moreTo">
         <router-link :to="moreTo" class="more">更多</router-link>
       </span>

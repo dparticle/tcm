@@ -1,5 +1,5 @@
 <template>
-  <div class="tcm-card">
+  <div class="tcm-card" @click="toDetails">
     <!-- 是否有图片资源 -->
     <van-image v-if="img" class="img" height="120" :src="img" />
     <van-image v-else class="img" height="120" :src="noPhotoSrc" />
@@ -29,6 +29,17 @@ export default {
     name: String,
     nameEng: String,
     img: String,
+  },
+  methods: {
+    toDetails: function () {
+      console.log("跳转至 " + this.id + " id 详情页");
+      this.$router.push({
+        path: "/tcm/details",
+        query: {
+          id: this.id,
+        },
+      });
+    },
   },
 };
 </script>

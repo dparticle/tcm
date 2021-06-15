@@ -1,11 +1,10 @@
 <template>
   <div id="app">
-    <div class="content">
-      <!--TODO 保存路由状态 -->
-      <keep-alive>
-        <router-view />
-      </keep-alive>
-    </div>
+    <!--TODO 保存路由状态 -->
+    <keep-alive>
+      <router-view v-if="$route.meta.keepAlive" />
+    </keep-alive>
+    <router-view v-if="!$route.meta.keepAlive" />
     <bottom-bar v-show="$route.meta.bottomBarShow"></bottom-bar>
   </div>
 </template>
@@ -37,10 +36,5 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-}
-
-/* 防止内容被底部栏遮挡 */
-.content {
-  margin-bottom: 50px;
 }
 </style>

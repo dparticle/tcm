@@ -11,6 +11,7 @@ const routes = [
     component: Home,
     meta: {
       bottomBarShow: true,
+      keepAlive: true,
     },
   },
   {
@@ -23,6 +24,7 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/StoreHouse.vue"),
     meta: {
       bottomBarShow: true,
+      keepAlive: true,
     },
   },
   {
@@ -31,6 +33,7 @@ const routes = [
     component: () => import("../views/User.vue"),
     meta: {
       bottomBarShow: true,
+      keepAlive: true,
     },
   },
   {
@@ -60,6 +63,16 @@ const routes = [
     path: "/setting",
     name: "Setting",
     component: () => import("../views/Setting.vue"),
+  },
+  {
+    path: "/search",
+    name: "Search",
+    component: () => import("../views/Search.vue"),
+  },
+  {
+    path: "/tcm/details",
+    name: "Details",
+    component: () => import("../views/Details.vue"),
   },
 ];
 

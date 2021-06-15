@@ -4,6 +4,9 @@
     <template #left>
       <font-awesome-icon :icon="['fas', 'chevron-left']" />
     </template>
+    <template #right>
+      <slot name="right"></slot>
+    </template>
   </van-nav-bar>
 </template>
 
