@@ -32,7 +32,7 @@
     </back-nav>
     <van-swipe @change="onChange">
       <van-swipe-item v-for="(img, index) in imgList" :key="index">
-        <van-image height="200" :src="img" />
+        <van-image class="img" height="200" :src="img" />
       </van-swipe-item>
       <template #indicator>
         <div class="custom-indicator">
@@ -134,6 +134,10 @@ export default {
 .right-icon {
   color: #646566;
   margin-left: 10px;
+}
+
+.img {
+  width: 100%;
 }
 
 .custom-indicator {

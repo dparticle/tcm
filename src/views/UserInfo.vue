@@ -76,6 +76,7 @@
 
 <script>
 import BackNav from "../components/BackNav";
+import { Dialog } from "vant";
 
 export default {
   name: "UserInfo",
@@ -106,11 +107,20 @@ export default {
   //TODO 修改 username，更新后 user 需要更新
   methods: {
     logout: function () {
-      localStorage.removeItem("token");
-      this.$store.commit("SET_TOKEN", { token: undefined });
-      this.$store.commit("SET_USER", { user: undefined });
-      // 返回上一个页面，放前面和放后面都会出现报错，因为路由销毁要在这个路由的动作都做完后
-      this.$router.back();
+      Dialog.confirm({
+        title: "退出登录",
+        message: "是否确认退出登录",
+      })
+        .then(() => {
+          localStorage.removeItem("token");
+          this.$store.commit("SET_TOKEN", { token: undefined });
+          this.$store.commit("SET_USER", { user: undefined });
+          // 返回上一个页面，放前面和放后面都会出现报错，因为路由销毁要在这个路由的动作都做完后
+          this.$router.back();
+        })
+        .catch(() => {
+          // on cancel
+        });
     },
     usernameDialogConfirm: function () {
       //TODO 请求后端更新用户名

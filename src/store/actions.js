@@ -6,7 +6,7 @@ export default {
   login(context, payload) {
     console.log("vuex acions => 登录");
     payload.$api.user.login(payload.values).then((response) => {
-      console.log("POST /user/login => " + response.data);
+      console.log("POST /login => " + response.data);
       // console.log("登录请求后端返回：" + response.data);
       if (response.data.error) {
         Toast.fail(response.data.error);

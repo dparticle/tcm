@@ -4,7 +4,7 @@ import base from "./base";
 
 const user = {
   login(params) {
-    return axios.post(`${base.local}/user/login`, params);
+    return axios.post(`${base.local}/login`, params);
   },
   reg(params) {
     return axios.post(`${base.local}/user/reg`, params);

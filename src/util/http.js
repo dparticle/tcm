@@ -3,7 +3,7 @@ import axios from "axios";
 import store from "../store";
 import api from "../api";
 import { Toast } from "vant";
-import { getExpires, getPhone } from "./util";
+import { getExpires } from "./util";
 
 // 跳转登录页
 // const toLoginRouter = () => {
@@ -44,12 +44,17 @@ function isTokenExpired() {
 const errorHandle = (res) => {
   switch (res.status) {
     // 401: 未登录状态，跳转登录路由，egg.js token 验证失败返回也是
+    // 在 /users/refreshToken 中返回 403 没用，设计的是超过 20 分钟之外直接去请求，不经过 /users/refreshToken，返回的还是默认的 401
     case 401:
+      if (store.state.token) {
+        Toast("登录过期，请重新登录");
+      } else {
+        Toast("请登录");
+      }
       localStorage.removeItem("token");
       store.commit("SET_TOKEN", { token: undefined });
       store.commit("SET_USER", { user: undefined });
       // toLoginRouter();
-      Toast("请登录");
       break;
     case 404:
       Toast.fail("资源不存在");
@@ -73,7 +78,10 @@ instance.interceptors.request.use(
       config.headers.Authorization = store.getters.fullToken;
 
       // 判断 token 是否即将过期，且不是请求刷新 token 的接口
-      if (isTokenExpired() && config.url.indexOf("/user/refreshToken") === -1) {
+      if (
+        isTokenExpired() &&
+        config.url.indexOf("/users/refreshToken") === -1
+      ) {
         console.log(`${config.url} 响应拦截器 => token 即将过期`);
         // 请求来了，先判断是否正在刷新 token
         // 如果不是，将刷新 token 标志置为 true 并请求刷新 token.
@@ -84,15 +92,15 @@ instance.interceptors.request.use(
           window.isRefreshing = true;
           // 更新 token
           api.user
-            .refreshToken({ phone: getPhone() })
+            .refreshToken({ token: store.state.token })
             .then((response) => {
-              console.log("POST /user/refreshToken => " + response.data);
+              console.log("POST /users/refreshToken => " + response.data);
               store.commit("SET_TOKEN", { token: response.data });
               config.headers.Authorization = store.getters.fullToken;
               afreshRequest(store.getters.fullToken);
             })
             .catch((error) => {
-              console.log("[ERROR]POST /user/refreshToken => " + error);
+              console.log("[ERROR]POST /users/refreshToken => " + error);
               //TODO 未知 bug 情况
 
               // store.dispatch("resetUserCookies").then(() => {
