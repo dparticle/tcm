@@ -5,12 +5,10 @@ export default {
   //TODO 分 user 模块
   login(context, payload) {
     console.log("vuex acions => 登录");
-    payload.$api.user.login(payload.values).then((response) => {
-      console.log("POST /login => " + response.data);
-      // console.log("登录请求后端返回：" + response.data);
-      if (response.data.error) {
-        Toast.fail(response.data.error);
-      } else {
+    payload.$api.user
+      .login(payload.values)
+      .then((response) => {
+        console.log("POST /login => " + response.data);
         Toast.success("登录成功");
         // 设置全局状态
         context.commit(mutationsType.SET_TOKEN, {
@@ -18,14 +16,14 @@ export default {
         });
         // 设置全局用户配置，需要考虑先获取的 token，再获取的 user
         context.dispatch("me", payload.$api);
-        // context.commit(mutationsType.SET_USER_PHONE, {
-        //   phone: payload.values.phone,
-        // });
         setTimeout(() => {
           payload.$router.back();
         }, 500);
-      }
-    });
+      })
+      .catch((error) => {
+        console.log("[ERROR] POST /login => " + error.data.message);
+        Toast.fail(error.data.message);
+      });
   },
   reg(context, payload) {
     console.log("vuex acions => 注册");

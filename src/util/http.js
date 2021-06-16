@@ -60,7 +60,14 @@ const errorHandle = (res) => {
       Toast.fail("资源不存在");
       break;
     default:
-      console.log(res);
+      console.log(
+        `${res.config.url} 响应拦截器 => status: ` +
+          res.status +
+          ", statusText: " +
+          res.statusText +
+          ", message: " +
+          res.data.message
+      );
   }
 };
 
@@ -82,7 +89,7 @@ instance.interceptors.request.use(
         isTokenExpired() &&
         config.url.indexOf("/users/refreshToken") === -1
       ) {
-        console.log(`${config.url} 响应拦截器 => token 即将过期`);
+        console.log(`${config.url} 请求拦截器 => token 即将过期`);
         // 请求来了，先判断是否正在刷新 token
         // 如果不是，将刷新 token 标志置为 true 并请求刷新 token.
         // 如果是，则先将请求缓存到数组中，等到刷新完 token 后再次重新请求之前缓存的请求接口
@@ -100,7 +107,7 @@ instance.interceptors.request.use(
               afreshRequest(store.getters.fullToken);
             })
             .catch((error) => {
-              console.log("[ERROR]POST /users/refreshToken => " + error);
+              console.log("[ERROR] POST /users/refreshToken => " + error);
               //TODO 未知 bug 情况
 
               // store.dispatch("resetUserCookies").then(() => {
@@ -120,7 +127,7 @@ instance.interceptors.request.use(
             });
           });
         } else {
-          console.log(`${config.url} 响应拦截器 => 请求此接口时正在更新 token`);
+          console.log(`${config.url} 请求拦截器 => 请求此接口时正在更新 token`);
           return new Promise((resolve) => {
             cacheRequestArrHandle((token) => {
               config.headers.Authorization = token;
