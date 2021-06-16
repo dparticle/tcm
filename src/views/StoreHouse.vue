@@ -141,10 +141,7 @@ export default {
   watch: {
     tagValue: function (val) {
       console.log("tabValue 值改变为 => " + val);
-      this.tcmList = [];
-      this.pageIndex = 0;
-      this.finished = false;
-      this.loading = true;
+      this.clearTcmList();
       this.onLoad();
     },
   },
@@ -205,6 +202,12 @@ export default {
             this.finished = true;
           }
         });
+    },
+    clearTcmList: function () {
+      this.tcmList = [];
+      this.pageIndex = 0;
+      this.finished = false;
+      this.loading = true;
     },
   },
   components: {
