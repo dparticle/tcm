@@ -51,7 +51,16 @@
       <!-- 热文推荐，每天都有新发现 list -->
       <home-item title="热文推荐" describe="每天都有新发现">
         <!--TODO 一个 cell-group -->
-        <div style="height: 200px">这是内容</div>
+        <van-cell-group>
+          <van-cell
+            v-for="(item, index) in articleList"
+            :key="index"
+            center
+            :title="item.title"
+            :value="item.date"
+            :url="item.url"
+          />
+        </van-cell-group>
       </home-item>
     </div>
   </div>
@@ -119,9 +128,15 @@ export default {
     },
   },
   mounted() {
-    this.$api.tcm.getCommend().then((response) => {
-      console.log("GET /tcm/recommend => " + response.statusText);
+    // 每日养生推荐获取
+    this.$api.tcm.getCommendTcm().then((response) => {
+      console.log("GET /recommend/tcm => " + response.statusText);
       this.recommendList = response.data;
+    });
+    // 热门文章推荐获取
+    this.$api.tcm.getCommendArticle().then((response) => {
+      console.log("GET /recommend/article => " + response.statusText);
+      this.articleList = response.data;
     });
   },
   components: {
@@ -147,5 +162,13 @@ export default {
 .daily-health {
   height: 200px;
   margin: 10px 4px;
+}
+
+.van-cell__title {
+  flex: 3;
+}
+
+.van-cell__value {
+  flex: 1;
 }
 </style>

@@ -16,7 +16,7 @@
         clearable
       />
       <!-- 显示当前所选分类标签 -->
-      <div v-if="tagValue !== ''" class="classification">
+      <div v-if="tagValue" class="classification">
         <span>所选分类：</span>
         <van-tag closeable size="large" type="primary" @close="onTagClose">
           {{ tagValue }}
@@ -65,8 +65,8 @@ export default {
   data() {
     return {
       tcmList: [],
-      page: 0,
-      perPage: 20,
+      pageIndex: 0,
+      pageSize: 20,
       // list 刷新
       loading: false,
       finished: false,
@@ -74,7 +74,8 @@ export default {
       searchContent: "",
       cascaderShow: false,
       cascaderValue: "",
-      tagValue: "",
+      tagValue: undefined,
+      classification: undefined,
       //TODO 后端获取 demo 数据
       options: [
         // 药性
@@ -137,38 +138,54 @@ export default {
       ],
     };
   },
+  watch: {
+    tagValue: function (val) {
+      console.log("tabValue 值改变为 => " + val);
+      this.tcmList = [];
+      this.pageIndex = 0;
+      this.finished = false;
+      this.loading = true;
+      this.onLoad();
+    },
+  },
   methods: {
     onSearch: function () {
       console.log("药库搜索 => " + this.searchContent);
     },
     onFinish: function ({ selectedOptions }) {
       this.cascaderShow = false;
+      // 顺序很重要！！！
+      //TODO classification 没有灵活性，想到可以设置一个英文 tagValue
+      this.classification = selectedOptions[0].value;
       this.tagValue = selectedOptions.map((option) => option.text).join("/");
       //TODO 后端请求分类 用 change 异步
       //TODO 字符映射数据库字段名 json？？？
     },
     onTagClose: function () {
-      this.tagValue = "";
+      this.tagValue = undefined;
+      this.classification = undefined;
       // 不知道怎么把级联初始化，直接赋空字符串不可行，上方的滑块位置不正确
       // this.cascaderValue = "";
     },
     onLoad: function () {
-      console.log("请求前页数：" + this.page);
+      console.log("请求前页数：" + this.pageIndex);
       // 定时器，时间和 axios 的超时时间一致，错误处理
       const time = setTimeout(() => {
         console.log("10s 后 loading 值 => " + this.loading);
         if (this.loading) {
           console.log("list 加载失败");
           //TODO 未知失败请求后的页数是否增加，好像是增加的，那需要回溯，但是再执行一次就会成功，一下子显示 2 perPage 也不是不可以
-          console.log("失败请求后页数 => " + this.page);
+          console.log("失败请求后页数 => " + this.pageIndex);
           this.error = true;
           this.loading = false;
         }
       }, 10000);
       this.$api.tcm
         .rough({
-          page: this.page,
-          perPage: this.perPage,
+          pageIndex: this.pageIndex,
+          pageSize: this.pageSize,
+          classification: this.classification,
+          keyword: this.tagValue && this.tagValue.split("/")[1],
         })
         .then((response) => {
           console.log("POST /tcm/rough => " + response.statusText);
@@ -180,11 +197,11 @@ export default {
           // 关闭定时器
           console.log("list 加载成功，关闭 error 计时器");
           clearTimeout(time);
-          this.page++;
-          console.log("请求后页数 => " + this.page);
+          this.pageIndex++;
+          console.log("请求后页数 => " + this.pageIndex);
 
           // 数据全部加载完成
-          if (response.data < this.perPage) {
+          if (response.data < this.pageSize) {
             this.finished = true;
           }
         });
