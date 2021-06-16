@@ -73,7 +73,7 @@ export default {
   me(context, api) {
     console.log("vuex acions => 获取用户信息");
     api.user.me().then((response) => {
-      console.log("GET /user/me => " + response.statusText);
+      console.log("GET /users/me => " + response.statusText);
       context.commit(mutationsType.SET_USER, { user: response.data });
     });
   },

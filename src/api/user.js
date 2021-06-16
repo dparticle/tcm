@@ -10,10 +10,10 @@ const user = {
     return axios.post(`${base.local}/user/reg`, params);
   },
   me() {
-    return axios.get(`${base.local}/user/me`);
+    return axios.get(`${base.local}/users/me`);
   },
   refreshToken(params) {
-    return axios.post(`${base.local}/user/refreshToken`, params);
+    return axios.post(`${base.local}/users/refreshToken`, params);
   },
 };
 
