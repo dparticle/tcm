@@ -30,34 +30,26 @@ const routes = [
   {
     path: "/user",
     name: "User",
-    component: () => import("../views/User.vue"),
+    component: () => import("../views/user/User.vue"),
     meta: {
       bottomBarShow: true,
       keepAlive: true,
     },
   },
   {
-    path: "/test",
-    name: "Test",
-    component: () => import("../views/Test.vue"),
-    meta: {
-      bottomBarShow: true,
-    },
-  },
-  {
     path: "/user/login",
     name: "Login",
-    component: () => import("../views/Login.vue"),
+    component: () => import("../views/user/Login.vue"),
   },
   {
     path: "/user/register",
     name: "Register",
-    component: () => import("../views/Register.vue"),
+    component: () => import("../views/user/Register.vue"),
   },
   {
     path: "/user/info",
     name: "UserInfo",
-    component: () => import("../views/UserInfo.vue"),
+    component: () => import("../views/user/UserInfo.vue"),
   },
   {
     path: "/setting",

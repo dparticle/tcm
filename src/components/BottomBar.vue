@@ -30,15 +30,6 @@
         />
       </template>
     </van-tabbar-item>
-    <van-tabbar-item replace to="/test" name="test">
-      <span>测试</span>
-      <template #icon>
-        <font-awesome-icon
-          :icon="['fas', 'vial']"
-          class="van-tabbar-item-icon"
-        />
-      </template>
-    </van-tabbar-item>
   </van-tabbar>
 </template>
 

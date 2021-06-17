@@ -1,98 +1,112 @@
-<!-- 注册表单组件 -->
 <template>
-  <div>
-    <van-form @submit="onRegister">
-      <van-field name="uploader" label="上传头像">
-        <template #input>
-          <van-uploader
-            v-model="user.uploader"
-            :after-read="afterRead"
-            :max-count="1"
-          />
-        </template>
-      </van-field>
-      <van-field
-        v-model="user.username"
-        name="username"
-        label="用户名"
-        placeholder="请输入用户名（不填默认手机号）"
-      />
-      <van-field
-        v-model="user.phone"
-        name="phone"
-        required
-        label="手机号"
-        placeholder="请输入手机号"
-        type="tel"
-        :rules="[
-          {
-            required: true,
-            message: '请填写手机号',
-          },
-          {
-            pattern:
-              /^1(3\d|4[5-9]|5[0-35-9]|6[2567]|7[0-8]|8\d|9[0-35-9])\d{8}$/,
-            message: '手机号格式错误',
-          },
-        ]"
-        clearable
-      />
-      <van-field
-        v-model="user.sms"
-        name="sms"
-        center
-        clearable
-        label="短信验证码"
-        placeholder="请输入短信验证码"
-      >
-        <template #button>
-          <van-button size="small" type="primary" @click="sendVerificationCode"
-            >发送验证码
+  <div class="register">
+    <BackNav :title="navTitleName" />
+    <div class="form">
+      <van-form @submit="onRegister">
+        <!-- 头像 -->
+        <van-field name="uploader" label="上传头像">
+          <template #input>
+            <van-uploader
+              v-model="user.uploader"
+              :after-read="afterRead"
+              :max-count="1"
+            />
+          </template>
+        </van-field>
+        <!-- 用户名 -->
+        <van-field
+          v-model="user.username"
+          name="username"
+          label="用户名"
+          placeholder="请输入用户名（不填默认手机号）"
+        />
+        <!-- 手机号，必需 -->
+        <van-field
+          v-model="user.phone"
+          name="phone"
+          required
+          label="手机号"
+          placeholder="请输入手机号"
+          type="tel"
+          :rules="[
+            {
+              required: true,
+              message: '请填写手机号',
+            },
+            {
+              pattern:
+                /^1(3\d|4[5-9]|5[0-35-9]|6[2567]|7[0-8]|8\d|9[0-35-9])\d{8}$/,
+              message: '手机号格式错误',
+            },
+          ]"
+          clearable
+        />
+        <!--TODO 验证码，必需，取消点击出发提交 -->
+        <van-field
+          v-model="user.sms"
+          name="sms"
+          center
+          clearable
+          label="短信验证码"
+          placeholder="请输入短信验证码"
+        >
+          <template #button>
+            <van-button
+              size="small"
+              type="primary"
+              @click="sendVerificationCode"
+              >发送验证码
+            </van-button>
+          </template>
+        </van-field>
+        <!-- 密码，必需 -->
+        <van-field
+          v-model="user.password"
+          :type="pwdSeen ? undefined : 'password'"
+          name="password"
+          required
+          label="密码"
+          placeholder="请输入密码"
+          :rules="rules.pwd"
+          @click-right-icon="onChangePwdSeen"
+        >
+          <template #right-icon style="color: #b2b5b9">
+            <password-seen-icon :value="pwdSeen" />
+          </template>
+        </van-field>
+        <!-- 确认密码，必需 -->
+        <van-field
+          v-model="user.rePassword"
+          :type="pwdSeen ? undefined : 'password'"
+          name="rePassword"
+          required
+          label="确认密码"
+          placeholder="请再次输入密码"
+          :rules="rules.rePwd"
+        />
+        <div style="margin: 16px; padding-top: 10px">
+          <van-button round block type="info" native-type="submit"
+            >注册
           </van-button>
-        </template>
-      </van-field>
-      <van-field
-        v-model="user.password"
-        :type="pwdSeen ? undefined : 'password'"
-        name="password"
-        required
-        label="密码"
-        placeholder="请输入密码"
-        :rules="rules.pwd"
-        @click-right-icon="onChangePwdSeen"
-      >
-        <template #right-icon style="color: #b2b5b9">
-          <password-seen-icon :value="pwdSeen" />
-        </template>
-      </van-field>
-      <van-field
-        v-model="user.rePassword"
-        :type="pwdSeen ? undefined : 'password'"
-        name="rePassword"
-        required
-        label="确认密码"
-        placeholder="请再次输入密码"
-        :rules="rules.rePwd"
-      />
-      <div style="margin: 16px; padding-top: 10px">
-        <van-button round block type="info" native-type="submit"
-          >注册
-        </van-button>
-      </div>
-    </van-form>
+        </div>
+      </van-form>
+    </div>
   </div>
 </template>
 
 <script>
-import PasswordSeenIcon from "./PasswordSeenIcon";
+import BackNav from "../../components/BackNav";
+import { stringCheck } from "../../util/util";
 import md5 from "md5";
-import { stringCheck } from "../util/util";
 import { mapActions } from "vuex";
+import PasswordSeenIcon from "../../components/PasswordSeenIcon";
+import { Toast } from "vant";
 
 export default {
-  name: "RegisterForm",
+  name: "Register",
   data() {
     return {
+      navTitleName: "注册",
       user: {
         uploader: [],
         username: "",
@@ -164,7 +178,7 @@ export default {
     },
     sendVerificationCode: function () {
       //TODO 点击后密码错误提示显示
-      console.log("发送验证码！");
+      Toast("发送验证码");
     },
     onChangePwdSeen: function () {
       this.pwdSeen = !this.pwdSeen;
@@ -200,6 +214,7 @@ export default {
     console.log("Register Router => destroyed");
   },
   components: {
+    BackNav,
     PasswordSeenIcon,
   },
 };

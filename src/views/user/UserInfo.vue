@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import BackNav from "../components/BackNav";
+import BackNav from "../../components/BackNav";
 import { Dialog } from "vant";
 
 export default {

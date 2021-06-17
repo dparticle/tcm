@@ -12,7 +12,7 @@
         @confirm="deleteCache"
         @cancel="show = false"
       />
-      <van-cell center title="关于" is-link />
+      <van-cell center title="关于" value="v1.0" />
     </van-cell-group>
   </div>
 </template>

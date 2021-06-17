@@ -151,6 +151,6 @@ export default {
 }
 
 .item-text {
-  margin: 16px 10px;
+  margin: 8px 10px 16px;
 }
 </style>
