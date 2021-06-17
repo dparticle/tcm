@@ -69,6 +69,7 @@
 <script>
 import HomeItem from "../components/HomeItem";
 import RecommendCard from "../components/RecommendCard";
+import qs from "qs";
 
 export default {
   name: "Home",
@@ -129,15 +130,19 @@ export default {
   },
   mounted() {
     // 每日养生推荐获取
-    this.$api.tcms.getCommendTcm().then((response) => {
-      console.log("GET /recommend/tcm => " + response.statusText);
-      this.recommendList = response.data;
-    });
+    this.$api.recommends
+      .index(qs.stringify({ type: "tcms" }))
+      .then((response) => {
+        console.log("GET /recommends?type=tcms => " + response.statusText);
+        this.recommendList = response.data;
+      });
     // 热门文章推荐获取
-    this.$api.tcms.getCommendArticle().then((response) => {
-      console.log("GET /recommend/article => " + response.statusText);
-      this.articleList = response.data;
-    });
+    this.$api.recommends
+      .index(qs.stringify({ type: "articles" }))
+      .then((response) => {
+        console.log("GET /recommends?type=articles => " + response.statusText);
+        this.articleList = response.data;
+      });
   },
   components: {
     HomeItem,

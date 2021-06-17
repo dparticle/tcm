@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import { Toast } from "vant";
+
 export default {
   name: "TcmCard",
   data() {
@@ -32,13 +34,18 @@ export default {
   },
   methods: {
     toDetails: function () {
-      console.log("跳转至 " + this.id + " id 详情页");
-      this.$router.push({
-        path: "/tcm/details",
-        query: {
-          id: this.id,
-        },
-      });
+      //TODO 只解决了是否登录，过期如何解决
+      if (this.$store.state.token) {
+        console.log("跳转至 " + this.id + " id 详情页");
+        this.$router.push({
+          path: "/tcm/details",
+          query: {
+            id: this.id,
+          },
+        });
+      } else {
+        Toast("请登录");
+      }
     },
   },
 };
