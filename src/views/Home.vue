@@ -129,12 +129,12 @@ export default {
   },
   mounted() {
     // 每日养生推荐获取
-    this.$api.tcm.getCommendTcm().then((response) => {
+    this.$api.tcms.getCommendTcm().then((response) => {
       console.log("GET /recommend/tcm => " + response.statusText);
       this.recommendList = response.data;
     });
     // 热门文章推荐获取
-    this.$api.tcm.getCommendArticle().then((response) => {
+    this.$api.tcms.getCommendArticle().then((response) => {
       console.log("GET /recommend/article => " + response.statusText);
       this.articleList = response.data;
     });

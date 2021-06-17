@@ -190,7 +190,7 @@ export default {
           ? this.searchContent
           : undefined,
       });
-      this.$api.tcm.index(query).then((response) => {
+      this.$api.tcms.index(query).then((response) => {
         console.log(`GET /tcms?${query} => ` + response.statusText);
         for (let item of sliceArray(response.data, 2)) {
           this.tcmList.push(item);

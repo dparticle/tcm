@@ -5,7 +5,7 @@ export default {
   //TODO 分 user 模块
   login(context, payload) {
     console.log("vuex acions => 登录");
-    payload.$api.user
+    payload.$api.users
       .login(payload.values)
       .then((response) => {
         console.log("POST /login => " + response.data);
@@ -29,7 +29,7 @@ export default {
     console.log("vuex acions => 注册");
     // console.log(payload.values);
     // 没实现异步
-    payload.$api.user
+    payload.$api.users
       .reg(payload.values)
       .then((response) => {
         console.log("POST /users => " + response.data);
@@ -74,7 +74,7 @@ export default {
   // 获取用户信息
   me(context, api) {
     console.log("vuex acions => 获取用户信息");
-    api.user.me().then((response) => {
+    api.users.me().then((response) => {
       console.log("GET /users/me => " + response.statusText);
       context.commit(mutationsType.SET_USER, { user: response.data });
     });

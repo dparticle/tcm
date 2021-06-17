@@ -100,7 +100,7 @@ export default {
     },
   },
   mounted() {
-    this.$api.tcm.show(this.$route.query.id).then((response) => {
+    this.$api.tcms.show(this.$route.query.id).then((response) => {
       console.log(
         `POST /tcms/${this.$route.query.id} => ` + response.statusText
       );
@@ -118,7 +118,6 @@ export default {
           });
         }
       }
-      console.log(this.infoList);
     });
   },
   components: {

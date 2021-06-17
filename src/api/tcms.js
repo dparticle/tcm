@@ -2,7 +2,7 @@ import axios from "../util/http";
 import base from "./base";
 // import qs from "qs";  // URL 解析成对象格式，对象格式解析成 URL
 
-const tcm = {
+const tcms = {
   index(query) {
     return axios.get(`${base.local}/tcms?` + query);
   },
@@ -17,4 +17,4 @@ const tcm = {
   },
 };
 
-export default tcm;
+export default tcms;

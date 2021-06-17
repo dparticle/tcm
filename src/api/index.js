@@ -1,7 +1,7 @@
-import user from "./user";
-import tcm from "./tcm";
+import users from "./users";
+import tcms from "./tcms";
 
 export default {
-  user,
-  tcm,
+  users,
+  tcms,
 };
