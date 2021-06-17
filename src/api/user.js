@@ -7,7 +7,7 @@ const user = {
     return axios.post(`${base.local}/login`, params);
   },
   reg(params) {
-    return axios.post(`${base.local}/user/reg`, params);
+    return axios.post(`${base.local}/users`, params);
   },
   me() {
     return axios.get(`${base.local}/users/me`);

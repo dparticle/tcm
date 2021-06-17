@@ -29,13 +29,11 @@ export default {
     console.log("vuex acions => 注册");
     // console.log(payload.values);
     // 没实现异步
-    payload.$api.user.reg(payload.values).then((response) => {
-      console.log("POST /user/reg => " + response.data);
-      // 错误处理，判断是否存在某属性 in（支持继承）、hasOwnProperty（无继承）、undefined
-      console.log(response.data.error);
-      if (response.data.error) {
-        Toast.fail(response.data.error);
-      } else {
+    payload.$api.user
+      .reg(payload.values)
+      .then((response) => {
+        console.log("POST /users => " + response.data);
+        // 错误处理，判断是否存在某属性 in（支持继承）、hasOwnProperty（无继承）、undefined
         const toast = Toast.loading({
           duration: 0, // 持续展示 toast
           forbidClick: true,
@@ -61,13 +59,17 @@ export default {
         setTimeout(() => {
           payload.$router.replace({
             path: "/user/login",
+            //TODO 可用参数
             query: {
               phone: payload.values.phone,
             },
           });
         }, 3000);
-      }
-    });
+      })
+      .catch((error) => {
+        console.log("[ERROR] POST /users => " + error.data.message);
+        Toast.fail(error.data.message);
+      });
   },
   // 获取用户信息
   me(context, api) {

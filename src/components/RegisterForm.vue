@@ -119,14 +119,22 @@ export default {
   },
   methods: {
     onRegister: function (values) {
+      //TODO values 中 uploader 显示 Array(1) 为 undefined？？？应该是用法问题，没做上传，File 对象不能直接加 url 属性
+      // console.log(values);
       for (let key of Object.keys(values)) {
-        //TODO uploader 待处理
         // 空字符串处理成没有赋值，使传到后端时数据自动被过滤
         if (!stringCheck(values[key])) {
           values[key] = undefined;
         }
+        //TODO uploader 待处理
         if (key === "password") {
           values[key] = md5(values[key]);
+        } else if (key === "uploader") {
+          if (this.user.uploader.length === 0) {
+            values[key] = undefined;
+          } else {
+            values[key] = this.user.uploader[0].url;
+          }
         }
         // 删除重复密码的属性
         delete values.rePassword;
@@ -146,11 +154,12 @@ export default {
       file.message = "上传中...";
 
       setTimeout(() => {
+        //TODO 加 url 好像不对
         file.url =
           "https://gitee.com/dparticle/image_host_picgo/raw/master/img/20210608001819.jpg";
         file.status = undefined;
         file.message = undefined;
-        console.log(this.uploader);
+        // console.log(this.user.uploader);
       }, 2000);
     },
     sendVerificationCode: function () {
