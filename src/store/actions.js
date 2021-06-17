@@ -5,12 +5,10 @@ export default {
   //TODO 分 user 模块
   login(context, payload) {
     console.log("vuex acions => 登录");
-    payload.$api.user.login(payload.values).then((response) => {
-      console.log("POST /user/login => " + response.data);
-      // console.log("登录请求后端返回：" + response.data);
-      if (response.data.error) {
-        Toast.fail(response.data.error);
-      } else {
+    payload.$api.users
+      .login(payload.values)
+      .then((response) => {
+        console.log("POST /login => " + response.data);
         Toast.success("登录成功");
         // 设置全局状态
         context.commit(mutationsType.SET_TOKEN, {
@@ -18,26 +16,24 @@ export default {
         });
         // 设置全局用户配置，需要考虑先获取的 token，再获取的 user
         context.dispatch("me", payload.$api);
-        // context.commit(mutationsType.SET_USER_PHONE, {
-        //   phone: payload.values.phone,
-        // });
         setTimeout(() => {
           payload.$router.back();
         }, 500);
-      }
-    });
+      })
+      .catch((error) => {
+        console.log("[ERROR] POST /login => " + error.data.message);
+        Toast.fail(error.data.message);
+      });
   },
   reg(context, payload) {
     console.log("vuex acions => 注册");
     // console.log(payload.values);
     // 没实现异步
-    payload.$api.user.reg(payload.values).then((response) => {
-      console.log("POST /user/reg => " + response.data);
-      // 错误处理，判断是否存在某属性 in（支持继承）、hasOwnProperty（无继承）、undefined
-      console.log(response.data.error);
-      if (response.data.error) {
-        Toast.fail(response.data.error);
-      } else {
+    payload.$api.users
+      .reg(payload.values)
+      .then((response) => {
+        console.log("POST /users => " + response.data);
+        // 错误处理，判断是否存在某属性 in（支持继承）、hasOwnProperty（无继承）、undefined
         const toast = Toast.loading({
           duration: 0, // 持续展示 toast
           forbidClick: true,
@@ -63,19 +59,23 @@ export default {
         setTimeout(() => {
           payload.$router.replace({
             path: "/user/login",
+            //TODO 可用参数
             query: {
               phone: payload.values.phone,
             },
           });
         }, 3000);
-      }
-    });
+      })
+      .catch((error) => {
+        console.log("[ERROR] POST /users => " + error.data.message);
+        Toast.fail(error.data.message);
+      });
   },
   // 获取用户信息
   me(context, api) {
     console.log("vuex acions => 获取用户信息");
-    api.user.me().then((response) => {
-      console.log("GET /user/me => " + response.statusText);
+    api.users.me().then((response) => {
+      console.log("GET /users/me => " + response.statusText);
       context.commit(mutationsType.SET_USER, { user: response.data });
     });
   },

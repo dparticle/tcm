@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import { Toast } from "vant";
+
 export default {
   name: "RecommendCard",
   data() {
@@ -27,13 +29,17 @@ export default {
   },
   methods: {
     toDetails: function () {
-      console.log("跳转至 " + this.info.id + " id 详情页");
-      this.$router.push({
-        path: "/tcm/details",
-        query: {
-          id: this.info.id,
-        },
-      });
+      if (this.$store.state.token) {
+        console.log("跳转至 " + this.info.id + " id 详情页");
+        this.$router.push({
+          path: "/tcm/details",
+          query: {
+            id: this.info.id,
+          },
+        });
+      } else {
+        Toast("请登录");
+      }
     },
   },
 };

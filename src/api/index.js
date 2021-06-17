@@ -1,7 +1,9 @@
-import user from "./user";
-import tcm from "./tcm";
+import users from "./users";
+import tcms from "./tcms";
+import recommends from "./recommends";
 
 export default {
-  user,
-  tcm,
+  users,
+  tcms,
+  recommends,
 };
