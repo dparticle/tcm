@@ -100,8 +100,10 @@ export default {
     },
   },
   mounted() {
-    this.$api.tcm.getInfo({ id: this.$route.query.id }).then((response) => {
-      console.log("POST /tcm => " + response.statusText);
+    this.$api.tcm.show(this.$route.query.id).then((response) => {
+      console.log(
+        `POST /tcms/${this.$route.query.id} => ` + response.statusText
+      );
       for (let key of Object.keys(response.data)) {
         if (key === "name") {
           this.title = response.data[key];

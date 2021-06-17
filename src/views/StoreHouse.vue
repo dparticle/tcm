@@ -58,7 +58,8 @@
 
 <script>
 import TcmCard from "../components/TcmCard";
-import { sliceArray } from "../util/util";
+import { sliceArray, stringCheck } from "../util/util";
+import qs from "qs";
 
 export default {
   name: "StoreHouse",
@@ -148,6 +149,8 @@ export default {
   methods: {
     onSearch: function () {
       console.log("药库搜索 => " + this.searchContent);
+      this.clearTcmList();
+      this.onLoad();
     },
     onFinish: function ({ selectedOptions }) {
       this.cascaderShow = false;
@@ -177,31 +180,34 @@ export default {
           this.loading = false;
         }
       }, 10000);
-      this.$api.tcm
-        .rough({
-          pageIndex: this.pageIndex,
-          pageSize: this.pageSize,
-          classification: this.classification,
-          keyword: this.tagValue && this.tagValue.split("/")[1],
-        })
-        .then((response) => {
-          console.log("POST /tcm/rough => " + response.statusText);
-          for (let item of sliceArray(response.data, 2)) {
-            this.tcmList.push(item);
-          }
-          // 加载状态结束
-          this.loading = false;
-          // 关闭定时器
-          console.log("list 加载成功，关闭 error 计时器");
-          clearTimeout(time);
-          this.pageIndex++;
-          console.log("请求后页数 => " + this.pageIndex);
+      const query = qs.stringify({
+        type: this.classification || "all",
+        type_value:
+          (this.classification && this.tagValue.split("/")[1]) || undefined,
+        page: this.pageIndex,
+        per_page: this.pageSize,
+        keyword: stringCheck(this.searchContent)
+          ? this.searchContent
+          : undefined,
+      });
+      this.$api.tcm.index(query).then((response) => {
+        console.log(`GET /tcms?${query} => ` + response.statusText);
+        for (let item of sliceArray(response.data, 2)) {
+          this.tcmList.push(item);
+        }
+        // 加载状态结束
+        this.loading = false;
+        // 关闭定时器
+        console.log("list 加载成功，关闭 error 计时器");
+        clearTimeout(time);
+        this.pageIndex++;
+        console.log("请求后页数 => " + this.pageIndex);
 
-          // 数据全部加载完成
-          if (response.data < this.pageSize) {
-            this.finished = true;
-          }
-        });
+        // 数据全部加载完成
+        if (response.data < this.pageSize) {
+          this.finished = true;
+        }
+      });
     },
     clearTcmList: function () {
       this.tcmList = [];
