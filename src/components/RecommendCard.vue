@@ -1,11 +1,6 @@
 <template>
   <div class="recommend-card" @click="toDetails">
-    <van-image
-      v-if="info.imgs.length !== 0"
-      class="img"
-      height="125"
-      :src="info.imgs[0]"
-    />
+    <van-image v-if="info.img" class="img" height="125" :src="info.img" />
     <van-image v-else class="img" height="125" :src="noPhotoSrc" />
     <div class="text">
       <div class="name">{{ info.name }}</div>
