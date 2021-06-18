@@ -1,9 +1,9 @@
 import axios from "../util/http";
-import base from "./base";
+import baseURL from "./base";
 
 const recommends = {
   index(query) {
-    return axios.get(`${base.local}/recommends?` + query);
+    return axios.get(`${baseURL}/recommends?` + query);
   },
 };
 

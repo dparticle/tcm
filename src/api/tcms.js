@@ -1,12 +1,12 @@
 import axios from "../util/http";
-import base from "./base";
+import baseURL from "./base";
 
 const tcms = {
   index(query) {
-    return axios.get(`${base.local}/tcms?` + query);
+    return axios.get(`${baseURL}/tcms?` + query);
   },
   show(id) {
-    return axios.get(`${base.local}/tcms/` + id);
+    return axios.get(`${baseURL}/tcms/` + id);
   },
 };
 
