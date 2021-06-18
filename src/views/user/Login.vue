@@ -97,7 +97,7 @@ export default {
     reg: function () {
       console.log("登录路由 => 注册路由");
       // console.log(this.$store.getters.registerRouterInfo);
-      this.$store.commit("SET_ROUTER_PATH", { path: "/user/register" });
+      this.$store.commit("SET_ROUTER_PATH", { path: "/register" });
       // console.log(this.$store.state.registerRouterPath);
       this.$router.push(this.$store.state.registerRouterPath);
     },

@@ -8,7 +8,7 @@ import { getExpires } from "./util";
 // 跳转登录页
 // const toLoginRouter = () => {
 //   router.push({
-//     path: "/user/login",
+//     path: "/login",
 //     // 当前路由的一些参数
 //     // query: {
 //     //   redirect: router.currentRoute.fullPath,

@@ -100,9 +100,9 @@ export default {
     },
   },
   mounted() {
-    this.$api.tcms.show(this.$route.query.id).then((response) => {
+    this.$api.tcms.show(this.$route.params.id).then((response) => {
       console.log(
-        `POST /tcms/${this.$route.query.id} => ` + response.statusText
+        `POST /tcms/${this.$route.params.id} => ` + response.statusText
       );
       for (let key of Object.keys(response.data)) {
         if (key === "name") {

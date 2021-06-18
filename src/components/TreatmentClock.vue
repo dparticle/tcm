@@ -57,6 +57,8 @@
 </template>
 
 <script>
+import { Toast } from "vant";
+
 export default {
   name: "TreatmentClock",
   data() {
@@ -101,7 +103,7 @@ export default {
     },
     changeTodayStatus: function () {
       if (!this.myTodayStatus) {
-        console.log("今日打卡");
+        Toast.success("已打卡");
       }
       this.myTodayStatus = !this.myTodayStatus;
     },

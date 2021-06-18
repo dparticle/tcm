@@ -37,12 +37,12 @@ const routes = [
     },
   },
   {
-    path: "/user/login",
+    path: "/login",
     name: "Login",
     component: () => import("../views/user/Login.vue"),
   },
   {
-    path: "/user/register",
+    path: "/register",
     name: "Register",
     component: () => import("../views/user/Register.vue"),
   },
@@ -62,7 +62,7 @@ const routes = [
     component: () => import("../views/Search.vue"),
   },
   {
-    path: "/tcm/details",
+    path: "/tcm/:id",
     name: "Details",
     component: () => import("../views/Details.vue"),
   },

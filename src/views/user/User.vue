@@ -43,14 +43,7 @@
           />
         </template>
       </van-cell>
-      <van-cell
-        v-else
-        center
-        size="large"
-        title="点击登录"
-        is-link
-        to="/user/login"
-      >
+      <van-cell v-else center size="large" title="点击登录" is-link to="/login">
         <template #icon>
           <van-image
             class="avatar"
