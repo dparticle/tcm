@@ -69,7 +69,8 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  mode: "history",
+  // 真机运行必须设置为 hash，否则会出现白屏
+  mode: "hash",
   routes,
 });
 
