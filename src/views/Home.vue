@@ -165,7 +165,7 @@ export default {
 }
 
 .daily-health {
-  height: 200px;
+  /*height: 200px;*/
   margin: 10px 4px;
 }
 
