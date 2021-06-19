@@ -111,6 +111,12 @@ export default {
     // this.user.phone = this.$store.state.phone;
     this.user.phone = this.$route.query.phone;
   },
+  beforeRouteUpdate(to, from, next) {
+    if (from.query.phone) {
+      this.$router.back();
+    }
+    next();
+  },
   components: {
     BackNav,
     PasswordSeenIcon,
