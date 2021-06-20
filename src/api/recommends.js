@@ -1,9 +1,10 @@
 import axios from "../util/http";
-import base from "./base";
+import baseURL from "./base";
 
 const recommends = {
-  index(query) {
-    return axios.get(`${base.local}/recommends?` + query);
+  // get 传參需要格式是 { params: params }
+  index(params) {
+    return axios.get(`${baseURL}/recommends`, { params });
   },
 };
 

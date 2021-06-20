@@ -58,8 +58,7 @@ export default {
         // });
         setTimeout(() => {
           payload.$router.replace({
-            path: "/user/login",
-            //TODO 可用参数
+            path: "/login",
             query: {
               phone: payload.values.phone,
             },

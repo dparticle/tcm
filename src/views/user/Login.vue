@@ -97,7 +97,7 @@ export default {
     reg: function () {
       console.log("登录路由 => 注册路由");
       // console.log(this.$store.getters.registerRouterInfo);
-      this.$store.commit("SET_ROUTER_PATH", { path: "/user/register" });
+      this.$store.commit("SET_ROUTER_PATH", { path: "/register" });
       // console.log(this.$store.state.registerRouterPath);
       this.$router.push(this.$store.state.registerRouterPath);
     },
@@ -110,6 +110,12 @@ export default {
     // 自动填充 phone，可以实现
     // this.user.phone = this.$store.state.phone;
     this.user.phone = this.$route.query.phone;
+  },
+  beforeRouteUpdate(to, from, next) {
+    if (from.query.phone) {
+      this.$router.back();
+    }
+    next();
   },
   components: {
     BackNav,

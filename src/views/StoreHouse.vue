@@ -8,6 +8,7 @@
     </van-nav-bar>
     <!-- 粘性布局，固定在顶部 -->
     <van-sticky>
+      <!-- 失去焦点不会刷新 -->
       <van-search
         v-model="searchContent"
         shape="round"
@@ -180,7 +181,7 @@ export default {
           this.loading = false;
         }
       }, 10000);
-      const query = qs.stringify({
+      const params = {
         type: this.classification || "all",
         type_value:
           (this.classification && this.tagValue.split("/")[1]) || undefined,
@@ -189,9 +190,12 @@ export default {
         keyword: stringCheck(this.searchContent)
           ? this.searchContent
           : undefined,
-      });
-      this.$api.tcms.index(query).then((response) => {
-        console.log(`GET /tcms?${query} => ` + response.statusText);
+      };
+      this.$api.tcms.index(params).then((response) => {
+        // 可以直接从 response 中取 url
+        console.log(
+          `GET /tcms?${qs.stringify(params)} => ` + response.statusText
+        );
         for (let item of sliceArray(response.data, 2)) {
           this.tcmList.push(item);
         }

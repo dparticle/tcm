@@ -28,23 +28,14 @@
           label="手机号"
           placeholder="请输入手机号"
           type="tel"
-          :rules="[
-            {
-              required: true,
-              message: '请填写手机号',
-            },
-            {
-              pattern:
-                /^1(3\d|4[5-9]|5[0-35-9]|6[2567]|7[0-8]|8\d|9[0-35-9])\d{8}$/,
-              message: '手机号格式错误',
-            },
-          ]"
+          :rules="rules.phone"
           clearable
         />
-        <!--TODO 验证码，必需，取消点击出发提交 -->
+        <!--TODO 验证码，必需 -->
         <van-field
           v-model="user.sms"
           name="sms"
+          required
           center
           clearable
           label="短信验证码"
@@ -54,8 +45,11 @@
             <van-button
               size="small"
               type="primary"
+              :disabled="isVerificationButtonDisabled"
               @click="sendVerificationCode"
-              >发送验证码
+              native-type="button"
+            >
+              {{ VerificationButtonText }}
             </van-button>
           </template>
         </van-field>
@@ -100,7 +94,7 @@ import { stringCheck } from "../../util/util";
 import md5 from "md5";
 import { mapActions } from "vuex";
 import PasswordSeenIcon from "../../components/PasswordSeenIcon";
-import { Toast } from "vant";
+import { Notify } from "vant";
 
 export default {
   name: "Register",
@@ -115,8 +109,30 @@ export default {
         password: "",
         rePassword: "",
       },
+      VerificationButtonText: "发送验证码",
+      isVerificationButtonDisabled: true,
       pwdSeen: false,
       rules: {
+        phone: [
+          {
+            required: true,
+            message: "请填写手机号",
+          },
+          {
+            validator: (value) => {
+              if (
+                /^1(3\d|4[5-9]|5[0-35-9]|6[2567]|7[0-8]|8\d|9[0-35-9])\d{8}$/.test(
+                  value
+                )
+              ) {
+                this.isVerificationButtonDisabled = false;
+                return true;
+              }
+              return false;
+            },
+            message: "手机号格式错误",
+          },
+        ],
         pwd: [{ required: true, message: "请填写密码" }],
         rePwd: [
           { required: true, message: "请再次填写密码" },
@@ -177,8 +193,41 @@ export default {
       }, 2000);
     },
     sendVerificationCode: function () {
-      //TODO 点击后密码错误提示显示
-      Toast("发送验证码");
+      console.log("发送验证码");
+      let second = 60;
+      this.isVerificationButtonDisabled = true;
+      const timer = setInterval(() => {
+        second--;
+        if (second) {
+          this.VerificationButtonText = `剩余 ${second} 秒`;
+        } else {
+          clearInterval(timer);
+          this.isVerificationButtonDisabled = false;
+          this.VerificationButtonText = `重新获取`;
+        }
+      }, 1000);
+      // 通知栏通知，点击
+      this.$api.verifications
+        .create({ type: "code", phone: this.user.phone })
+        .then((response) => {
+          Notify({
+            type: "success",
+            message: `[后台返回验证码] ${response.data}，点击自动填充`,
+            onClick: () => {
+              this.user.sms = response.data;
+            },
+          });
+        })
+        .catch((error) => {
+          Notify({
+            type: "danger",
+            message: error.data.message,
+          });
+          // 清除计时器，释放禁用
+          clearInterval(timer);
+          this.isVerificationButtonDisabled = false;
+          this.VerificationButtonText = `重新获取`;
+        });
     },
     onChangePwdSeen: function () {
       this.pwdSeen = !this.pwdSeen;

@@ -40,13 +40,15 @@
         </div>
       </template>
     </van-swipe>
-    <home-item
-      v-for="(info, index) in infoList"
-      :key="index"
-      :title="info.title"
-    >
-      <p class="item-text">{{ info.text }}</p>
-    </home-item>
+    <div class="info-list">
+      <home-item
+        v-for="(info, index) in infoList"
+        :key="index"
+        :title="info.title"
+      >
+        <p class="item-text">{{ info.text }}</p>
+      </home-item>
+    </div>
   </div>
 </template>
 
@@ -55,6 +57,7 @@ import BackNav from "../components/BackNav";
 import HomeItem from "../components/HomeItem";
 import { Toast } from "vant";
 import orm from "../util/orm";
+import baseURL from "../api/base";
 
 export default {
   name: "Details",
@@ -85,9 +88,27 @@ export default {
   methods: {
     onStar: function () {
       if (this.isStar) {
-        Toast("取消收藏");
+        this.$api.stars
+          .destroy(this.$route.params.id)
+          .then((response) => {
+            console.log(
+              `DELETE ${baseURL}/stars/${this.$route.params.id} => ${response.statusText}`
+            );
+            Toast.success(response.data);
+          })
+          .catch((error) => {
+            Toast.fail(error.data.message);
+          });
       } else {
-        Toast("收藏成功");
+        this.$api.stars
+          .create({ tcm_id: this.$route.params.id })
+          .then((response) => {
+            console.log(`POST ${baseURL}/stars => ${response.statusText}`);
+            Toast.success(response.data);
+          })
+          .catch((error) => {
+            Toast.fail(error.data.message);
+          });
       }
       this.isStar = !this.isStar;
     },
@@ -100,9 +121,22 @@ export default {
     },
   },
   mounted() {
-    this.$api.tcms.show(this.$route.query.id).then((response) => {
+    // 是否收藏获取
+    this.$api.stars
+      .index({ tcm_id: this.$route.params.id })
+      .then((response) => {
+        console.log(
+          `GET ${baseURL}/stars?tcm_id=${this.$route.params.id} => ${response.statusText}`
+        );
+        this.isStar = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    // 详细信息获取
+    this.$api.tcms.show(this.$route.params.id).then((response) => {
       console.log(
-        `POST /tcms/${this.$route.query.id} => ` + response.statusText
+        `POST /tcms/${this.$route.params.id} => ` + response.statusText
       );
       for (let key of Object.keys(response.data)) {
         if (key === "name") {
@@ -152,5 +186,9 @@ export default {
 
 .item-text {
   margin: 8px 10px 16px;
+}
+
+.info-list {
+  padding-bottom: 20px;
 }
 </style>

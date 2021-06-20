@@ -37,17 +37,17 @@ const routes = [
     },
   },
   {
-    path: "/user/login",
+    path: "/login",
     name: "Login",
     component: () => import("../views/user/Login.vue"),
   },
   {
-    path: "/user/register",
+    path: "/register",
     name: "Register",
     component: () => import("../views/user/Register.vue"),
   },
   {
-    path: "/user/info",
+    path: "/user/:phone",
     name: "UserInfo",
     component: () => import("../views/user/UserInfo.vue"),
   },
@@ -62,14 +62,20 @@ const routes = [
     component: () => import("../views/Search.vue"),
   },
   {
-    path: "/tcm/details",
+    path: "/tcm/:id",
     name: "Details",
     component: () => import("../views/Details.vue"),
+  },
+  {
+    path: "/star",
+    name: "Star",
+    component: () => import("../views/Star.vue"),
   },
 ];
 
 const router = new VueRouter({
-  mode: "history",
+  // 真机运行必须设置为 hash，否则会出现白屏
+  mode: "hash",
   routes,
 });
 

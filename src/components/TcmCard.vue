@@ -38,8 +38,8 @@ export default {
       if (this.$store.state.token) {
         console.log("跳转至 " + this.id + " id 详情页");
         this.$router.push({
-          path: "/tcm/details",
-          query: {
+          path: `/tcm/${this.id}`,
+          params: {
             id: this.id,
           },
         });
