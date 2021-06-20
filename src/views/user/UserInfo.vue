@@ -29,7 +29,6 @@
           close-on-click-action
           @cancel="avatarActionSheet.show = false"
         />
-        <!--TODO 更改用户名 -->
         <van-cell
           center
           title="用户名"
@@ -76,7 +75,7 @@
 
 <script>
 import BackNav from "../../components/BackNav";
-import { Dialog } from "vant";
+import { Dialog, Toast } from "vant";
 
 export default {
   name: "UserInfo",
@@ -104,7 +103,6 @@ export default {
       },
     };
   },
-  //TODO 修改 username，更新后 user 需要更新
   methods: {
     logout: function () {
       Dialog.confirm({
@@ -123,11 +121,22 @@ export default {
         });
     },
     usernameDialogConfirm: function () {
-      //TODO 请求后端更新用户名
       console.log("确认修改用户名，用户名为 => " + this.dialogs.username.value);
+      this.$api.users
+        .update(this.$route.params.phone, {
+          username: this.dialogs.username.value,
+        })
+        .then((response) => {
+          if (response.status === 204) {
+            this.$store.dispatch("me", this.$api);
+            Toast.success("更新成功");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
       this.dialogs.username.show = false;
       this.dialogs.username.value = "";
-      this.$store.dispatch("me", this.$api);
     },
     // 动作面板 item 选择
     onSelect: function (item) {

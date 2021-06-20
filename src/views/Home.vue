@@ -28,6 +28,7 @@
           :key="item.id"
           :text="item.text"
           :to="item.to"
+          @click="onClickGridItem(item)"
         >
           <template #icon>
             <van-image width="28" height="28" :src="item.src" />
@@ -50,17 +51,44 @@
       </home-item>
       <!-- 热文推荐，每天都有新发现 list -->
       <home-item title="热文推荐" describe="每天都有新发现">
-        <!--TODO 一个 cell-group -->
-        <van-cell-group>
-          <van-cell
-            v-for="(item, index) in articleList"
-            :key="index"
-            center
-            :title="item.title"
-            :value="item.date"
-            :url="item.url"
-          />
-        </van-cell-group>
+        <van-tabs v-model="activeName" animated>
+          <van-tab title="工作状态" name="工作状态">
+            <van-cell-group>
+              <van-cell
+                v-for="(item, index) in articleList1"
+                :key="index"
+                center
+                :title="item.title"
+                :value="item.date"
+                @click="onClickArticle(item.url)"
+              />
+            </van-cell-group>
+          </van-tab>
+          <van-tab title="时政要闻" name="时政要闻">
+            <van-cell-group>
+              <van-cell
+                v-for="(item, index) in articleList2"
+                :key="index"
+                center
+                :title="item.title"
+                :value="item.date"
+                @click="onClickArticle(item.url)"
+              />
+            </van-cell-group>
+          </van-tab>
+          <van-tab title="各地动态" name="各地动态">
+            <van-cell-group>
+              <van-cell
+                v-for="(item, index) in articleList3"
+                :key="index"
+                center
+                :title="item.title"
+                :value="item.date"
+                @click="onClickArticle(item.url)"
+              />
+            </van-cell-group>
+          </van-tab>
+        </van-tabs>
       </home-item>
     </div>
   </div>
@@ -69,6 +97,7 @@
 <script>
 import HomeItem from "../components/HomeItem";
 import RecommendCard from "../components/RecommendCard";
+import { Toast } from "vant";
 import qs from "qs";
 
 export default {
@@ -120,28 +149,62 @@ export default {
         },
       ],
       recommendList: [],
-      articleList: [],
+      activeName: "工作状态",
+      articleList1: [],
+      articleList2: [],
+      articleList3: [],
     };
   },
   methods: {
     onFocus: function () {
       this.$router.push("/search");
     },
+    onClickGridItem: function (item) {
+      Toast(item.text);
+    },
+    onClickArticle: function (url) {
+      Toast("文章链接地址：\n" + url);
+    },
   },
   mounted() {
     // 每日养生推荐获取
-    this.$api.recommends
-      .index(qs.stringify({ type: "tcms" }))
-      .then((response) => {
-        console.log("GET /recommends?type=tcms => " + response.statusText);
-        this.recommendList = response.data;
-      });
+    this.$api.recommends.index({ type: "tcms" }).then((response) => {
+      console.log("GET /recommends?type=tcms => " + response.statusText);
+      this.recommendList = response.data;
+    });
     // 热门文章推荐获取
     this.$api.recommends
-      .index(qs.stringify({ type: "articles" }))
+      .index({ type: "articles", type_value: "工作动态" })
       .then((response) => {
-        console.log("GET /recommends?type=articles => " + response.statusText);
-        this.articleList = response.data;
+        console.log(
+          `GET /recommends?${qs.stringify({
+            type: "articles",
+            type_value: "工作动态",
+          })} => ` + response.statusText
+        );
+        this.articleList1 = response.data;
+      });
+    this.$api.recommends
+      .index({ type: "articles", type_value: "时政要闻" })
+      .then((response) => {
+        console.log(
+          `GET /recommends?${qs.stringify({
+            type: "articles",
+            type_value: "时政要闻",
+          })} => ` + response.statusText
+        );
+        this.articleList2 = response.data;
+      });
+    this.$api.recommends
+      .index({ type: "articles", type_value: "各地动态" })
+      .then((response) => {
+        console.log(
+          `GET /recommends?${qs.stringify({
+            type: "articles",
+            type_value: "各地动态",
+          })} => ` + response.statusText
+        );
+        this.articleList3 = response.data;
       });
   },
   components: {

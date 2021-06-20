@@ -78,7 +78,6 @@ let instance = axios.create({ timeout: 10000 });
 instance.defaults.headers.post["Content-Type"] =
   "application/x-www-form-urlencoded;charset=UTF-8";
 
-//TODO 请求拦截器
 instance.interceptors.request.use(
   (config) => {
     if (store.state.token) {
@@ -145,10 +144,12 @@ instance.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-//TODO 响应拦截器
 instance.interceptors.response.use(
-  // 请求成功
-  (res) => (res.status === 200 ? Promise.resolve(res) : Promise.reject(res)),
+  // 请求成功，204 用于更新/删除 http 状态码
+  (res) =>
+    res.status === 200 || res.status === 204
+      ? Promise.resolve(res)
+      : Promise.reject(res),
   (error) => {
     const { response } = error;
     if (response) {

@@ -47,7 +47,7 @@ const routes = [
     component: () => import("../views/user/Register.vue"),
   },
   {
-    path: "/user/info",
+    path: "/user/:phone",
     name: "UserInfo",
     component: () => import("../views/user/UserInfo.vue"),
   },

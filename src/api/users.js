@@ -15,6 +15,9 @@ const users = {
   refreshToken(params) {
     return axios.post(`${baseURL}/users/refreshToken`, params);
   },
+  update(phone, params) {
+    return axios.put(`${baseURL}/users/${phone}`, params);
+  },
 };
 
 export default users;

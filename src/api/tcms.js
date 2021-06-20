@@ -2,8 +2,8 @@ import axios from "../util/http";
 import baseURL from "./base";
 
 const tcms = {
-  index(query) {
-    return axios.get(`${baseURL}/tcms?` + query);
+  index(params) {
+    return axios.get(`${baseURL}/tcms`, { params });
   },
   show(id) {
     return axios.get(`${baseURL}/tcms/` + id);

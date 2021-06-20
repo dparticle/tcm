@@ -41,7 +41,7 @@
           ]"
           clearable
         />
-        <!--TODO 验证码，必需，取消点击出发提交 -->
+        <!--TODO 验证码，必需 -->
         <van-field
           v-model="user.sms"
           name="sms"
@@ -55,6 +55,7 @@
               size="small"
               type="primary"
               @click="sendVerificationCode"
+              native-type="button"
               >发送验证码
             </van-button>
           </template>
@@ -177,7 +178,6 @@ export default {
       }, 2000);
     },
     sendVerificationCode: function () {
-      //TODO 点击后密码错误提示显示
       Toast("发送验证码");
     },
     onChangePwdSeen: function () {

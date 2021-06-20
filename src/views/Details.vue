@@ -40,13 +40,15 @@
         </div>
       </template>
     </van-swipe>
-    <home-item
-      v-for="(info, index) in infoList"
-      :key="index"
-      :title="info.title"
-    >
-      <p class="item-text">{{ info.text }}</p>
-    </home-item>
+    <div class="info-list">
+      <home-item
+        v-for="(info, index) in infoList"
+        :key="index"
+        :title="info.title"
+      >
+        <p class="item-text">{{ info.text }}</p>
+      </home-item>
+    </div>
   </div>
 </template>
 
@@ -152,5 +154,9 @@ export default {
 
 .item-text {
   margin: 8px 10px 16px;
+}
+
+.info-list {
+  padding-bottom: 20px;
 }
 </style>

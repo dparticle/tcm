@@ -31,7 +31,7 @@
         :title="$store.state.user.username"
         :label="'手机号：' + $store.state.user.phone"
         is-link
-        to="/user/info"
+        @click="toUserInfo"
       >
         <template #icon>
           <van-image
@@ -161,6 +161,15 @@ export default {
         Toast("开启暗黑模式");
       }
       this.$store.commit("REVERSE_DARKMODE");
+    },
+    toUserInfo: function () {
+      const phone = this.$store.state.user.phone;
+      this.$router.push({
+        path: `/user/${phone}`,
+        params: {
+          phone,
+        },
+      });
     },
   },
   components: {
