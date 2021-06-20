@@ -39,7 +39,10 @@
             round
             width="60"
             height="60"
-            :src="$store.state.user.avatar_url"
+            :src="
+              $store.state.user.avatar_url ||
+              'https://img01.yzcdn.cn/vant/leaf.jpg'
+            "
           />
         </template>
       </van-cell>
@@ -63,7 +66,7 @@
         :key="item.id"
         :icon="item.icon"
         :text="item.text"
-        :to="item.to"
+        @click="toRouter(item.to)"
       />
     </van-grid>
     <!-- 疗程打卡 -->
@@ -115,7 +118,8 @@ export default {
           id: 2,
           icon: "star-o",
           text: "我的收藏",
-          to: undefined,
+          // 使用 html 属性和 router name 跳转路由
+          to: "Star",
         },
         //TODO 历史记录
         {
@@ -170,6 +174,18 @@ export default {
           phone,
         },
       });
+    },
+    // 直接放在 data，会一直绑定第一次运行的结果
+    toRouter(name) {
+      if (name) {
+        this.$router.push({
+          name,
+          // 不需要 phone，token 的存在性
+          // query: this.$store.state.token
+          //   ? { phone: this.$store.state.user.phone }
+          //   : undefined,
+        });
+      }
     },
   },
   components: {

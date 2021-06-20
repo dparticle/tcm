@@ -64,3 +64,13 @@ export function sliceArray(data, length) {
   }
   return result;
 }
+
+// 对象数组删除指定属性对象
+export function arrRemoveJson(arr, attr, value) {
+  if (!arr || arr.length === 0) {
+    return "";
+  }
+  return arr.filter(function (item) {
+    return item[attr] !== value;
+  });
+}

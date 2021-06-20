@@ -57,6 +57,7 @@ import BackNav from "../components/BackNav";
 import HomeItem from "../components/HomeItem";
 import { Toast } from "vant";
 import orm from "../util/orm";
+import baseURL from "../api/base";
 
 export default {
   name: "Details",
@@ -87,9 +88,27 @@ export default {
   methods: {
     onStar: function () {
       if (this.isStar) {
-        Toast("取消收藏");
+        this.$api.stars
+          .destroy(this.$route.params.id)
+          .then((response) => {
+            console.log(
+              `DELETE ${baseURL}/stars/${this.$route.params.id} => ${response.statusText}`
+            );
+            Toast.success(response.data);
+          })
+          .catch((error) => {
+            Toast.fail(error.data.message);
+          });
       } else {
-        Toast("收藏成功");
+        this.$api.stars
+          .create({ tcm_id: this.$route.params.id })
+          .then((response) => {
+            console.log(`POST ${baseURL}/stars => ${response.statusText}`);
+            Toast.success(response.data);
+          })
+          .catch((error) => {
+            Toast.fail(error.data.message);
+          });
       }
       this.isStar = !this.isStar;
     },
@@ -102,6 +121,19 @@ export default {
     },
   },
   mounted() {
+    // 是否收藏获取
+    this.$api.stars
+      .index({ tcm_id: this.$route.params.id })
+      .then((response) => {
+        console.log(
+          `GET ${baseURL}/stars?tcm_id=${this.$route.params.id} => ${response.statusText}`
+        );
+        this.isStar = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    // 详细信息获取
     this.$api.tcms.show(this.$route.params.id).then((response) => {
       console.log(
         `POST /tcms/${this.$route.params.id} => ` + response.statusText

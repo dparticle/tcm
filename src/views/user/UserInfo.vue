@@ -15,7 +15,10 @@
             <van-image
               width="25"
               height="25"
-              :src="$store.state.user.avatar_url"
+              :src="
+                $store.state.user.avatar_url ||
+                'https://img01.yzcdn.cn/vant/leaf.jpg'
+              "
               style="border-radius: 3px"
             />
           </template>
