@@ -1,7 +1,7 @@
 <template>
   <div class="tcm-card" @click="toDetails">
     <!-- 是否有图片资源 -->
-    <van-image v-if="img" class="img" height="120" :src="img" />
+    <van-image v-if="img" class="img" height="120" :src="img" lazy-load />
     <van-image v-else class="img" height="120" :src="noPhotoSrc" />
     <van-row type="flex" justify="center">
       <van-col>
